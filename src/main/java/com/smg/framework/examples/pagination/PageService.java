@@ -30,10 +30,10 @@ public class PageService {
 
     public Page getActionSettingPage(int pageNum) {
 
-        String sql = "select count(*) from actionsetting";
+        String sql = "select count(*) from test.actionsetting";
         int totalRecord = pd.getTotalRecord(sql);
 
-        sql = "select * from actionsetting";
+        sql = "select * from test.actionsetting";
         Page page = pd.getPage(pageNum, ActionSetting.class, sql, totalRecord);
         return page;
 
@@ -47,10 +47,5 @@ public class PageService {
         this.pd = pd;
     }
 
-    public static void main(String[] args) {
-        PageService ps = (PageService)SpringUtil.getBean("pageService");
-
-        Page page = ps.getActionSettingPage(4);
-    }
 
 }
