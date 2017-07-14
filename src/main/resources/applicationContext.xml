@@ -21,5 +21,19 @@
             <ref bean="ds" />
         </property>
     </bean>
+    
+    <bean id="pageDAO"
+          class="com.smg.framework.pagination.PageDaoImpl">
+        <property name="jdbcTemplate">
+            <ref bean="jdbcTemplate" />
+        </property>
+    </bean>
+    
+    <bean id="pageService"
+          class="com.smg.framework.examples.pagination.PageService">
+        <property name="pd">
+            <ref bean="pageDAO" />
+        </property>
+    </bean>
 
 </beans>
