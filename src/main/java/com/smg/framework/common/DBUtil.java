@@ -51,18 +51,4 @@ public class DBUtil {
         return jt;
         
     }
-    
-    public static void main(String[] args) {
-    
-        JdbcTemplate jt = DBUtil.getJdbcTemplate();
-        
-        SqlRowSet srs = jt.queryForRowSet("select * from charset_test_utf8");
-        int rowCount = 0;
-        while (srs.next()) {
-            System.out.println(srs.getString("id") + " - " + srs.getString("char_col"));
-            rowCount++;
-        }
-        System.out.println("Number of records : " + rowCount);
-    
-    }
 }
