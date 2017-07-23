@@ -1,5 +1,6 @@
-package com.smg.framework.common;
+package com.smg.framework.common.utils;
 
+import com.smg.framework.common.DBUtil;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
