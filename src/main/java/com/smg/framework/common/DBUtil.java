@@ -1,6 +1,7 @@
 
 package com.smg.framework.common;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +28,7 @@ public class DBUtil {
             log.fatal("cann't load db driver", ex);
         }
         
-        DriverManagerDataSource ds = (DriverManagerDataSource) SpringUtil.getBean("ds");
+        DruidDataSource ds = (DruidDataSource) SpringUtil.getBean("ds");
         
         return ds;
         
