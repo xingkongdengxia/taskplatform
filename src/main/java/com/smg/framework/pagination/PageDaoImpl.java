@@ -18,7 +18,7 @@ public class PageDaoImpl implements PageDao {
     );
 
     private JdbcTemplate jdbcTemplate;
-    private int pageSize;
+    private int pageSize = 10; //默认每页显示10条
 
     /* 
      * 获得总记录数
