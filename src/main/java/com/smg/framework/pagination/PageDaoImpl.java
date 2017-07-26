@@ -8,7 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 /**
- *分页功能-Page对象DAO接口实现类
+ * 分页功能-Page对象DAO接口实现类
+ *
  * @author justincai
  */
 public class PageDaoImpl implements PageDao {
@@ -17,6 +18,7 @@ public class PageDaoImpl implements PageDao {
     );
 
     private JdbcTemplate jdbcTemplate;
+    private int pageSize;
 
     /* 
      * 获得总记录数
@@ -41,10 +43,10 @@ public class PageDaoImpl implements PageDao {
      */
     @Override
     public Page getPage(int pageNum, Class clazz, String sql, int totalRecord) {
-        Page page = new Page(pageNum, totalRecord);
+        Page page = new Page(pageNum, totalRecord, pageSize);
         sql = sql + " limit " + page.getStartIndex() + "," + page.getPageSize();
         log.info(sql);
-        
+
         List list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(clazz));
         page.setList(list);
         log.info("currunt page list num:" + list.size());
@@ -59,6 +61,16 @@ public class PageDaoImpl implements PageDao {
     @Override
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    @Override
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
 }

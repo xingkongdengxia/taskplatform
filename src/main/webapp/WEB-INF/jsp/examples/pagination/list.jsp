@@ -34,7 +34,7 @@
                 <a href="#">上一页</a>
             </c:otherwise>  
         </c:choose>
-        
+
         <c:choose>  
             <c:when test="${page.currentPage<page.totalPage}">
                 <a href="<c:url value='/pagination/list?p=${page.currentPage+1}'/>">下一页</a>
@@ -43,5 +43,6 @@
                 <a href="#">下一页</a>
             </c:otherwise>  
         </c:choose>
+        <a href="<c:url value='/pagination/list?p=${page.totalPage}'/>"  class="btn_com" >尾页</a>
     </body>
 </html>
