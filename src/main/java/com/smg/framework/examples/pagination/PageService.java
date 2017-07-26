@@ -1,6 +1,5 @@
 package com.smg.framework.examples.pagination;
 
-import com.smg.framework.common.SpringUtil;
 import com.smg.framework.pagination.Page;
 import com.smg.framework.pagination.PageDao;
 import org.apache.commons.logging.Log;
@@ -20,6 +19,8 @@ public class PageService {
 
     private PageDao pd = null;
 
+    private int pageSize;
+
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
@@ -34,6 +35,7 @@ public class PageService {
         int totalRecord = pd.getTotalRecord(sql);
 
         sql = "select * from test.actionsetting";
+        pd.setPageSize(pageSize);
         Page page = pd.getPage(pageNum, ActionSetting.class, sql, totalRecord);
         return page;
 
@@ -47,5 +49,12 @@ public class PageService {
         this.pd = pd;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
 }

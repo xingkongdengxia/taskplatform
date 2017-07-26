@@ -22,11 +22,11 @@ public class Page {
     private List list = null;// list集合是用来装载一个页面中的所有记录的
 
 
-    public Page(int pageNum, int totalRecord) {
+    public Page(int pageNum, int totalRecord, int pageSize) {
         this.currentPage = pageNum;
         this.totalRecord = totalRecord;
 
-        this.pageSize = 10;// 设置一页默认显示10条查询记录
+        this.pageSize = pageSize;// 设置一页默认显示10条查询记录
         this.startIndex = (this.currentPage - 1) * this.pageSize;// 至于为什么this.page要减1，
         // 是因为mysql数据库对于分页查询时，得到的所有的查询记录，第一条记录的编号是从0开始
 

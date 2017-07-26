@@ -23,4 +23,8 @@ public interface PageDao {
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate);
 
+    public int getPageSize();
+
+    public void setPageSize(int pageSize);
+
 }
