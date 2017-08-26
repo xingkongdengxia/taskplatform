@@ -3,7 +3,9 @@
 
 <beans>
     
-     <!-- 引入jdbc配置文件 -->
+    <!--    数据库配置开始     -->
+
+    <!-- 引入jdbc配置文件 -->
     <!-- 配置进行解密  -->
     <bean id="propertyConfigurer" class="com.smg.framework.common.plugin.EncryptPropertyPlaceholderConfigurer">
         <property name="locations">
@@ -60,6 +62,29 @@
         </property>
     </bean>
     
+    
+    <!--   数据库配置结束     -->
+    
+    
+    <!--    Mybatis配置开始     -->
+    
+    <!-- 为Mybatis创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:com/smg/framework/upms/dao/mapper/*Mapper.xml"/>
+    </bean>
+    <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="**.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--     Mybatis配置结束     -->
+ 
+ 
+    <!--    其他Bean配置开始     -->
+
     <bean id="pageDAO"
           class="com.smg.framework.pagination.PageDaoImpl">
         <property name="jdbcTemplate">
@@ -72,7 +97,9 @@
         <property name="pd">
             <ref bean="pageDAO" />
         </property>
-         <property name="pageSize" value="5" />
+        <property name="pageSize" value="5" />
     </bean>
+    
+    <!--    其他Bean配置结束     -->
 
 </beans>
