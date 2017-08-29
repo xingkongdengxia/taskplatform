@@ -23,7 +23,7 @@ public class UpmsInterceptor extends HandlerInterceptorAdapter {
     private static final Log log = LogFactory.getLog(UpmsInterceptor.class);
 
     private final UpmsApiService upmsApiService = (UpmsApiService) SpringUtil.getBean("upmsApiService");
-    
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 过滤ajax
@@ -33,8 +33,8 @@ public class UpmsInterceptor extends HandlerInterceptorAdapter {
         // 登录信息
         Subject subject = SecurityUtils.getSubject();
         String username = (String) subject.getPrincipal();
-//        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
-//        request.setAttribute("upmsUser", upmsUser);
+        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
+        request.setAttribute("upmsUser", upmsUser);
         return true;
     }
 
