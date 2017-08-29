@@ -1,4 +1,4 @@
-package com.smg.framework.upms.dao.mapper;
+package com.smg.framework.upms.rpc.mapper;
 
 import com.smg.framework.upms.dao.model.UpmsPermission;
 import com.smg.framework.upms.dao.model.UpmsRole;

@@ -328,11 +328,10 @@
 
     <!-- 操作日志 -->
     <bean id="upmsLogService" class="com.smg.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
+
+    <!-- 接口服务 -->
+<!--    <bean id="upmsApiService" class="com.smg.framework.upms.rpc.service.impl.UpmsApiServiceImpl"/>-->
     
-     <!-- 接口服务 -->
-    <bean id="upmsApiService" class="com.smg.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
-        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>  
-    </bean>
     
     <!--   ##################     shiro配置结束    ################## -->
     <!--   ##################     ehcache配置开始    ################## -->

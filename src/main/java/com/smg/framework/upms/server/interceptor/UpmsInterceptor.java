@@ -1,6 +1,6 @@
 package com.smg.framework.upms.server.interceptor;
 
-import com.smg.framework.common.utils.PropertiesFileUtil;
+import com.smg.framework.common.SpringUtil;
 import com.smg.framework.upms.dao.model.UpmsUser;
 import com.smg.framework.upms.rpc.api.UpmsApiService;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +22,10 @@ public class UpmsInterceptor extends HandlerInterceptorAdapter {
 
     private static final Log log = LogFactory.getLog(UpmsInterceptor.class);
 
-    private static final String OSS_ALIYUN_OSS_POLICY = PropertiesFileUtil.getInstance("oss-client").get("oss.aliyun.oss.policy");
-
-    @Autowired
-    UpmsApiService upmsApiService;
+    private final UpmsApiService upmsApiService = (UpmsApiService) SpringUtil.getBean("upmsApiService");
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        request.setAttribute("OSS_ALIYUN_OSS_POLICY", OSS_ALIYUN_OSS_POLICY);
         // 过滤ajax
         if (null != request.getHeader("X-Requested-With") && request.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest")) {
             return true;
@@ -37,8 +33,8 @@ public class UpmsInterceptor extends HandlerInterceptorAdapter {
         // 登录信息
         Subject subject = SecurityUtils.getSubject();
         String username = (String) subject.getPrincipal();
-        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
-        request.setAttribute("upmsUser", upmsUser);
+//        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
+//        request.setAttribute("upmsUser", upmsUser);
         return true;
     }
 
