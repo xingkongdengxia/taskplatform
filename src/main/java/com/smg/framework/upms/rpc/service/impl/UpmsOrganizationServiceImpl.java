@@ -7,7 +7,6 @@ import com.smg.framework.upms.dao.model.UpmsOrganizationExample;
 import com.smg.framework.upms.rpc.api.UpmsOrganizationService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * UpmsOrganizationService实现
@@ -17,8 +16,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UpmsOrganizationServiceImpl extends BaseServiceImpl<UpmsOrganizationMapper, UpmsOrganization, UpmsOrganizationExample> implements UpmsOrganizationService {
 
     private static final Log log = LogFactory.getLog(UpmsOrganizationServiceImpl.class);
-
-    @Autowired
-    UpmsOrganizationMapper upmsOrganizationMapper;
 
 }

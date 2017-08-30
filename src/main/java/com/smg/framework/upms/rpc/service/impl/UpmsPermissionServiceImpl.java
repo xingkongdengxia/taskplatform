@@ -19,7 +19,6 @@ import com.smg.framework.upms.rpc.api.UpmsPermissionService;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,17 +34,13 @@ public class UpmsPermissionServiceImpl extends BaseServiceImpl<UpmsPermissionMap
 
     private static final Log log = LogFactory.getLog(UpmsPermissionServiceImpl.class);
 
-    @Autowired
-    UpmsSystemMapper upmsSystemMapper;
+    private UpmsSystemMapper upmsSystemMapper;
 
-    @Autowired
-    UpmsPermissionMapper upmsPermissionMapper;
+    private UpmsPermissionMapper upmsPermissionMapper;
 
-    @Autowired
-    UpmsApiService upmsApiService;
+    private UpmsApiService upmsApiService;
 
-    @Autowired
-    UpmsUserPermissionMapper upmsUserPermissionMapper;
+    private UpmsUserPermissionMapper upmsUserPermissionMapper;
 
     @Override
     public JSONArray getTreeByRoleId(Integer roleId) {
@@ -255,6 +250,38 @@ public class UpmsPermissionServiceImpl extends BaseServiceImpl<UpmsPermissionMap
             }
         }
         return systems;
+    }
+
+    public UpmsSystemMapper getUpmsSystemMapper() {
+        return upmsSystemMapper;
+    }
+
+    public void setUpmsSystemMapper(UpmsSystemMapper upmsSystemMapper) {
+        this.upmsSystemMapper = upmsSystemMapper;
+    }
+
+    public UpmsPermissionMapper getUpmsPermissionMapper() {
+        return upmsPermissionMapper;
+    }
+
+    public void setUpmsPermissionMapper(UpmsPermissionMapper upmsPermissionMapper) {
+        this.upmsPermissionMapper = upmsPermissionMapper;
+    }
+
+    public UpmsApiService getUpmsApiService() {
+        return upmsApiService;
+    }
+
+    public void setUpmsApiService(UpmsApiService upmsApiService) {
+        this.upmsApiService = upmsApiService;
+    }
+
+    public UpmsUserPermissionMapper getUpmsUserPermissionMapper() {
+        return upmsUserPermissionMapper;
+    }
+
+    public void setUpmsUserPermissionMapper(UpmsUserPermissionMapper upmsUserPermissionMapper) {
+        this.upmsUserPermissionMapper = upmsUserPermissionMapper;
     }
 
 }

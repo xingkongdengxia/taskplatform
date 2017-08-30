@@ -8,7 +8,6 @@ import com.smg.framework.upms.dao.model.UpmsUserExample;
 import com.smg.framework.upms.rpc.api.UpmsUserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +23,7 @@ public class UpmsUserServiceImpl extends BaseServiceImpl<UpmsUserMapper, UpmsUse
 
     private static final Log log = LogFactory.getLog(UpmsUserServiceImpl.class);
 
-    @Autowired
-    UpmsUserMapper upmsUserMapper;
+    private UpmsUserMapper upmsUserMapper;
 
     @Override
     public UpmsUser createUser(UpmsUser upmsUser) {
@@ -38,6 +36,14 @@ public class UpmsUserServiceImpl extends BaseServiceImpl<UpmsUserMapper, UpmsUse
         }
         upmsUserMapper.insert(upmsUser);
         return upmsUser;
+    }
+
+    public UpmsUserMapper getUpmsUserMapper() {
+        return upmsUserMapper;
+    }
+
+    public void setUpmsUserMapper(UpmsUserMapper upmsUserMapper) {
+        this.upmsUserMapper = upmsUserMapper;
     }
 
 }

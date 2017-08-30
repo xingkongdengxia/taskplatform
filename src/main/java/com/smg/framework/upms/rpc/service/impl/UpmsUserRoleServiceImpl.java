@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +25,7 @@ public class UpmsUserRoleServiceImpl extends BaseServiceImpl<UpmsUserRoleMapper,
 
     private static final Log log = LogFactory.getLog(UpmsUserRoleServiceImpl.class);
 
-    @Autowired
-    UpmsUserRoleMapper upmsUserRoleMapper;
+    private UpmsUserRoleMapper upmsUserRoleMapper;
 
     @Override
     public int role(String[] roleIds, int id) {
@@ -51,5 +49,15 @@ public class UpmsUserRoleServiceImpl extends BaseServiceImpl<UpmsUserRoleMapper,
         }
         return result;
     }
+
+    public UpmsUserRoleMapper getUpmsUserRoleMapper() {
+        return upmsUserRoleMapper;
+    }
+
+    public void setUpmsUserRoleMapper(UpmsUserRoleMapper upmsUserRoleMapper) {
+        this.upmsUserRoleMapper = upmsUserRoleMapper;
+    }
+    
+    
 
 }

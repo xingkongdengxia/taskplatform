@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +27,7 @@ public class UpmsRolePermissionServiceImpl extends BaseServiceImpl<UpmsRolePermi
 
     private static final Log log = LogFactory.getLog(UpmsRolePermissionServiceImpl.class);
 
-    @Autowired
-    UpmsRolePermissionMapper upmsRolePermissionMapper;
+    private UpmsRolePermissionMapper upmsRolePermissionMapper;
 
     @Override
     public int rolePermission(JSONArray datas, int id) {
@@ -55,6 +53,14 @@ public class UpmsRolePermissionServiceImpl extends BaseServiceImpl<UpmsRolePermi
             upmsRolePermissionMapper.deleteByExample(upmsRolePermissionExample);
         }
         return datas.size();
+    }
+
+    public UpmsRolePermissionMapper getUpmsRolePermissionMapper() {
+        return upmsRolePermissionMapper;
+    }
+
+    public void setUpmsRolePermissionMapper(UpmsRolePermissionMapper upmsRolePermissionMapper) {
+        this.upmsRolePermissionMapper = upmsRolePermissionMapper;
     }
 
 }

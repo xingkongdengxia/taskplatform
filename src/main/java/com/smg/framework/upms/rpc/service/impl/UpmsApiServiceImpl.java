@@ -24,7 +24,6 @@ import com.smg.framework.upms.rpc.api.UpmsApiService;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,19 +39,67 @@ public class UpmsApiServiceImpl implements UpmsApiService {
 
     private static final Log log = LogFactory.getLog(UpmsApiServiceImpl.class);
 
-    @Autowired
-    UpmsUserMapper upmsUserMapper;
+    private UpmsUserMapper upmsUserMapper;
 
-    @Autowired
-    UpmsApiMapper upmsApiMapper;
+    private UpmsApiMapper upmsApiMapper;
 
-    @Autowired
-    UpmsRolePermissionMapper upmsRolePermissionMapper;
+    private UpmsRolePermissionMapper upmsRolePermissionMapper;
 
-    @Autowired
-    UpmsUserPermissionMapper upmsUserPermissionMapper;
+    private UpmsUserPermissionMapper upmsUserPermissionMapper;
 
     private UpmsSystemMapper upmsSystemMapper;
+
+    private UpmsOrganizationMapper upmsOrganizationMapper;
+
+    private UpmsLogMapper upmsLogMapper;
+
+    public UpmsUserMapper getUpmsUserMapper() {
+        return upmsUserMapper;
+    }
+
+    public void setUpmsUserMapper(UpmsUserMapper upmsUserMapper) {
+        this.upmsUserMapper = upmsUserMapper;
+    }
+
+    public UpmsApiMapper getUpmsApiMapper() {
+        return upmsApiMapper;
+    }
+
+    public void setUpmsApiMapper(UpmsApiMapper upmsApiMapper) {
+        this.upmsApiMapper = upmsApiMapper;
+    }
+
+    public UpmsRolePermissionMapper getUpmsRolePermissionMapper() {
+        return upmsRolePermissionMapper;
+    }
+
+    public void setUpmsRolePermissionMapper(UpmsRolePermissionMapper upmsRolePermissionMapper) {
+        this.upmsRolePermissionMapper = upmsRolePermissionMapper;
+    }
+
+    public UpmsUserPermissionMapper getUpmsUserPermissionMapper() {
+        return upmsUserPermissionMapper;
+    }
+
+    public void setUpmsUserPermissionMapper(UpmsUserPermissionMapper upmsUserPermissionMapper) {
+        this.upmsUserPermissionMapper = upmsUserPermissionMapper;
+    }
+
+    public UpmsOrganizationMapper getUpmsOrganizationMapper() {
+        return upmsOrganizationMapper;
+    }
+
+    public void setUpmsOrganizationMapper(UpmsOrganizationMapper upmsOrganizationMapper) {
+        this.upmsOrganizationMapper = upmsOrganizationMapper;
+    }
+
+    public UpmsLogMapper getUpmsLogMapper() {
+        return upmsLogMapper;
+    }
+
+    public void setUpmsLogMapper(UpmsLogMapper upmsLogMapper) {
+        this.upmsLogMapper = upmsLogMapper;
+    }
 
     public UpmsSystemMapper getUpmsSystemMapper() {
         return upmsSystemMapper;
@@ -61,12 +108,6 @@ public class UpmsApiServiceImpl implements UpmsApiService {
     public void setUpmsSystemMapper(UpmsSystemMapper upmsSystemMapper) {
         this.upmsSystemMapper = upmsSystemMapper;
     }
-
-    @Autowired
-    UpmsOrganizationMapper upmsOrganizationMapper;
-
-    @Autowired
-    UpmsLogMapper upmsLogMapper;
 
     /**
      * 根据用户id获取所拥有的权限

@@ -8,7 +8,6 @@ import com.smg.framework.upms.dao.model.UpmsLogExample;
 import com.smg.framework.upms.rpc.api.UpmsLogService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +22,5 @@ import org.springframework.transaction.annotation.Transactional;
 public class UpmsLogServiceImpl extends BaseServiceImpl<UpmsLogMapper, UpmsLog, UpmsLogExample> implements UpmsLogService {
 
     private static final Log log = LogFactory.getLog(UpmsLogServiceImpl.class);
-
-    @Autowired
-    UpmsLogMapper upmsLogMapper;
 
 }

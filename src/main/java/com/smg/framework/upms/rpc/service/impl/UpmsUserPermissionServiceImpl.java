@@ -10,7 +10,6 @@ import com.smg.framework.upms.dao.model.UpmsUserPermissionExample;
 import com.smg.framework.upms.rpc.api.UpmsUserPermissionService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +25,7 @@ public class UpmsUserPermissionServiceImpl extends BaseServiceImpl<UpmsUserPermi
 
     private static final Log log = LogFactory.getLog(UpmsUserPermissionServiceImpl.class);
 
-    @Autowired
-    UpmsUserPermissionMapper upmsUserPermissionMapper;
+    private UpmsUserPermissionMapper upmsUserPermissionMapper;
 
     @Override
     public int permission(JSONArray datas, int id) {
@@ -50,6 +48,14 @@ public class UpmsUserPermissionServiceImpl extends BaseServiceImpl<UpmsUserPermi
             }
         }
         return datas.size();
+    }
+
+    public UpmsUserPermissionMapper getUpmsUserPermissionMapper() {
+        return upmsUserPermissionMapper;
+    }
+
+    public void setUpmsUserPermissionMapper(UpmsUserPermissionMapper upmsUserPermissionMapper) {
+        this.upmsUserPermissionMapper = upmsUserPermissionMapper;
     }
 
 }

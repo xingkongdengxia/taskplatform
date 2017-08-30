@@ -306,32 +306,54 @@
     <bean id="upmsOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
 
     <!-- 用户组织 -->
-    <bean id="upmsUserOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl"/>
+    <bean id="upmsUserOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl">
+        <property name="upmsUserOrganizationMapper"  ref="upmsUserOrganizationMapper"/>
+    </bean>
 
     <!-- 用户 -->
-    <bean id="upmsUserService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserServiceImpl"/>
+    <bean id="upmsUserService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserServiceImpl">
+        <property name="upmsUserMapper"  ref="upmsUserMapper"/>
+    </bean>
 
     <!-- 角色 -->
     <bean id="upmsRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
 
     <!-- 权限 -->
-    <bean id="upmsPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl"/>
+    <bean id="upmsPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl">
+        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>    
+        <property name="upmsPermissionMapper"  ref="upmsPermissionMapper"/>
+        <property name="upmsApiService"  ref="upmsApiService"/>
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>
+    </bean>
 
     <!-- 角色权限 -->
-    <bean id="upmsRolePermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl"/>
+    <bean id="upmsRolePermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl">
+        <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>    
+    </bean>
 
     <!-- 用户权限 -->
-    <bean id="upmsUserPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl"/>
+    <bean id="upmsUserPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl">
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>    
+    </bean>
 
     <!-- 用户角色 -->
-    <bean id="upmsUserRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl"/>
+    <bean id="upmsUserRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl">
+        <property name="upmsUserRoleMapper"  ref="upmsUserRoleMapper"/>    
+    </bean>
+        
 
     <!-- 操作日志 -->
     <bean id="upmsLogService" class="com.smg.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
     
-     <!-- 接口服务 -->
+    <!-- 接口服务 -->
     <bean id="upmsApiService" class="com.smg.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
-        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>  
+        <property name="upmsUserMapper"  ref="upmsUserMapper"/> 
+        <property name="upmsApiMapper"  ref="upmsApiMapper"/>
+        <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>
+        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>
+        <property name="upmsOrganizationMapper"  ref="upmsOrganizationMapper"/>
+        <property name="upmsLogMapper"  ref="upmsLogMapper"/>    
     </bean>
     
     <!--   ##################     shiro配置结束    ################## -->
