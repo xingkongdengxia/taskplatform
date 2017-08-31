@@ -121,71 +121,12 @@
         </property>
     </bean>
     <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
-        <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="**.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     
     
-
-<!--    <bean id="upmsSystemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsSystemMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsUserMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsApiMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.rpc.mapper.UpmsApiMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsLogMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsOrganizationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsOrganizationMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsPermissionMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsRoleMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsRolePermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsRolePermissionMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsUserOrganizationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsUserOrganizationMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsUserPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsUserPermissionMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    
-    <bean id="upmsUserRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.smg.framework.upms.dao.mapper.UpmsUserRoleMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>-->
-
-
-
-
     <!--   ##################     Mybatis配置结束    ################## -->
     <!--   ##################     shiro配置开始    ################## -->
     

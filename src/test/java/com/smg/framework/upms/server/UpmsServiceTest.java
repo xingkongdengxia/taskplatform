@@ -17,6 +17,7 @@ import com.smg.framework.upms.rpc.api.UpmsApiService;
 import com.smg.framework.upms.rpc.api.UpmsLogService;
 import com.smg.framework.upms.rpc.api.UpmsSystemService;
 import java.util.List;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -93,6 +94,13 @@ public class UpmsServiceTest {
         upmsLogService.initMapper();
         int count = upmsLogService.countByExample(new UpmsLogExample());
         System.out.println("testUpmsLogService测试结果：" + count);
+    }
+    
+    @Test
+    public void testShiroFilter() {
+        AbstractShiroFilter shiroFilter = (AbstractShiroFilter) SpringUtil.getBean("shiroFilter");
+        
+        System.out.println("testShiroFilter测试结果：" + shiroFilter.toString());
     }
 
 }
