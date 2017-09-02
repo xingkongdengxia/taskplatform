@@ -41,7 +41,15 @@ public class UpmsServiceTest {
         UpmsSystemService upmsSystemService = (UpmsSystemService) SpringUtil.getBean("upmsSystemService");
         upmsSystemService.initMapper();
         int count = upmsSystemService.countByExample(new UpmsSystemExample());
-        System.out.println(count);
+        System.out.println("testUpmsSystemService测试结果：" + count);
+
+        UpmsSystemExample upmsSystemExample = new UpmsSystemExample();
+        upmsSystemExample.createCriteria()
+                .andStatusEqualTo((byte) 1);
+        List<UpmsSystem> upmsSystems = upmsSystemService.selectByExample(new UpmsSystemExample());
+        for (UpmsSystem upmsSystem : upmsSystems) {
+            System.out.println("testUpmsSystemService测试结果upmsSystems：" + upmsSystem.getName());
+        }
     }
 
     @Test
@@ -95,11 +103,11 @@ public class UpmsServiceTest {
         int count = upmsLogService.countByExample(new UpmsLogExample());
         System.out.println("testUpmsLogService测试结果：" + count);
     }
-    
+
     @Test
     public void testShiroFilter() {
         AbstractShiroFilter shiroFilter = (AbstractShiroFilter) SpringUtil.getBean("shiroFilter");
-        
+
         System.out.println("testShiroFilter测试结果：" + shiroFilter.toString());
     }
 

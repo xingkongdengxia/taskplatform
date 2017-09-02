@@ -82,6 +82,7 @@ public class SSOController extends BaseController {
     @ApiOperation(value = "登录")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(HttpServletRequest request) {
+        String basePath = request.getContextPath();
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         String serverSessionId = session.getId().toString();
@@ -93,7 +94,7 @@ public class SSOController extends BaseController {
             String backurl = request.getParameter("backurl");
             String username = (String) subject.getPrincipal();
             if (StringUtils.isBlank(backurl)) {
-                backurl = "/";
+                backurl = "/manage/index";  //后台首页
             } else {
                 if (backurl.contains("?")) {
                     backurl += "&upms_code=" + code + "&upms_username=" + username;
@@ -111,6 +112,7 @@ public class SSOController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Object login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+        String basePath = request.getContextPath();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
@@ -157,7 +159,8 @@ public class SSOController extends BaseController {
         // 回跳登录前地址
         String backurl = request.getParameter("backurl");
         if (StringUtils.isBlank(backurl)) {
-            return new UpmsResult(UpmsResultConstant.SUCCESS, "/");
+            String rtnUrl = basePath + "/manage/index";
+            return new UpmsResult(UpmsResultConstant.SUCCESS, rtnUrl);
         } else {
             return new UpmsResult(UpmsResultConstant.SUCCESS, backurl);
         }
@@ -183,7 +186,7 @@ public class SSOController extends BaseController {
         // 跳回原地址
         String redirectUrl = request.getHeader("Referer");
         if (null == redirectUrl) {
-            redirectUrl = "/";
+            redirectUrl = "/sso/login";
         }
         return "redirect:" + redirectUrl;
     }

@@ -100,7 +100,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExampleWithBLOBs(Example example) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
             Object result = selectByExampleWithBLOBs.invoke(mapper, example);
             return (List<Record>) result;
@@ -114,7 +114,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExample(Example example) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
             Object result = selectByExample.invoke(mapper, example);
             return (List<Record>) result;
@@ -128,7 +128,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExampleWithBLOBsForStartPage(Example example, Integer pageNum, Integer pageSize) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
             PageHelper.startPage(pageNum, pageSize, false);
             Object result = selectByExampleWithBLOBs.invoke(mapper, example);
@@ -143,7 +143,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExampleForStartPage(Example example, Integer pageNum, Integer pageSize) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
             PageHelper.startPage(pageNum, pageSize, false);
             Object result = selectByExample.invoke(mapper, example);
@@ -158,7 +158,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExampleWithBLOBsForOffsetPage(Example example, Integer offset, Integer limit) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
             PageHelper.offsetPage(offset, limit, false);
             Object result = selectByExampleWithBLOBs.invoke(mapper, example);
@@ -173,7 +173,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public List<Record> selectByExampleForOffsetPage(Example example, Integer offset, Integer limit) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
             PageHelper.offsetPage(offset, limit, false);
             Object result = selectByExample.invoke(mapper, example);
@@ -188,7 +188,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public Record selectFirstByExample(Example example) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
             List<Record> result = (List<Record>) selectByExample.invoke(mapper, example);
             if (null != result && result.size() > 0) {
@@ -204,7 +204,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public Record selectFirstByExampleWithBLOBs(Example example) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
             List<Record> result = (List<Record>) selectByExampleWithBLOBs.invoke(mapper, example);
             if (null != result && result.size() > 0) {
@@ -220,7 +220,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
     @Override
     public Record selectByPrimaryKey(Integer id) {
         try {
-            DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+            DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey", id.getClass());
             Object result = selectByPrimaryKey.invoke(mapper, id);
             return (Record) result;
