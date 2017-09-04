@@ -45,7 +45,6 @@ public class ManageController extends BaseController {
         UpmsSystemExample upmsSystemExample = new UpmsSystemExample();
         upmsSystemExample.createCriteria()
                 .andStatusEqualTo((byte) 1);
-        upmsSystemService.initMapper();
         List<UpmsSystem> upmsSystems = upmsSystemService.selectByExample(upmsSystemExample);
         modelMap.put("upmsSystems", upmsSystems);
         // 当前登录用户权限

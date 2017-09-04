@@ -29,6 +29,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int countByExample(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method countByExample = mapper.getClass().getDeclaredMethod("countByExample", example.getClass());
@@ -43,6 +44,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int deleteByExample(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method deleteByExample = mapper.getClass().getDeclaredMethod("deleteByExample", example.getClass());
@@ -57,6 +59,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
@@ -71,6 +74,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int insert(Record record) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method insert = mapper.getClass().getDeclaredMethod("insert", record.getClass());
@@ -85,6 +89,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int insertSelective(Record record) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method insertSelective = mapper.getClass().getDeclaredMethod("insertSelective", record.getClass());
@@ -99,6 +104,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExampleWithBLOBs(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
@@ -113,6 +119,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExample(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
@@ -127,6 +134,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExampleWithBLOBsForStartPage(Example example, Integer pageNum, Integer pageSize) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
@@ -142,6 +150,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExampleForStartPage(Example example, Integer pageNum, Integer pageSize) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
@@ -157,6 +166,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExampleWithBLOBsForOffsetPage(Example example, Integer offset, Integer limit) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
@@ -172,6 +182,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public List<Record> selectByExampleForOffsetPage(Example example, Integer offset, Integer limit) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
@@ -187,6 +198,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public Record selectFirstByExample(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExample = mapper.getClass().getDeclaredMethod("selectByExample", example.getClass());
@@ -203,6 +215,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public Record selectFirstByExampleWithBLOBs(Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("selectByExampleWithBLOBs", example.getClass());
@@ -219,6 +232,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public Record selectByPrimaryKey(Integer id) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey", id.getClass());
@@ -233,6 +247,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByExampleSelective = mapper.getClass().getDeclaredMethod("updateByExampleSelective", record.getClass(), example.getClass());
@@ -247,6 +262,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByExampleWithBLOBs(@Param("record") Record record, @Param("example") Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByExampleWithBLOBs = mapper.getClass().getDeclaredMethod("updateByExampleWithBLOBs", record.getClass(), example.getClass());
@@ -261,6 +277,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByExample(@Param("record") Record record, @Param("example") Example example) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByExample = mapper.getClass().getDeclaredMethod("updateByExample", record.getClass(), example.getClass());
@@ -275,6 +292,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByPrimaryKeySelective(Record record) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByPrimaryKeySelective = mapper.getClass().getDeclaredMethod("updateByPrimaryKeySelective", record.getClass());
@@ -289,6 +307,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByPrimaryKeyWithBLOBs(Record record) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByPrimaryKeyWithBLOBs = mapper.getClass().getDeclaredMethod("updateByPrimaryKeyWithBLOBs", record.getClass());
@@ -303,6 +322,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int updateByPrimaryKey(Record record) {
+        initMapper();
         try {
             DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
             Method updateByPrimaryKey = mapper.getClass().getDeclaredMethod("updateByPrimaryKey", record.getClass());
@@ -317,6 +337,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public int deleteByPrimaryKeys(String ids) {
+        initMapper();
         try {
             if (StringUtils.isBlank(ids)) {
                 return 0;
@@ -343,7 +364,9 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 
     @Override
     public void initMapper() {
-        this.mapper = SpringContextUtil.getBean(getMapperClass());
+        if (this.mapper == null) {
+            this.mapper = SpringContextUtil.getBean(getMapperClass());
+        }
     }
 
     /**

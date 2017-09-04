@@ -39,7 +39,6 @@ public class UpmsServiceTest {
     @Test
     public void testUpmsSystemService() {
         UpmsSystemService upmsSystemService = (UpmsSystemService) SpringUtil.getBean("upmsSystemService");
-        upmsSystemService.initMapper();
         int count = upmsSystemService.countByExample(new UpmsSystemExample());
         System.out.println("testUpmsSystemService测试结果：" + count);
 
@@ -99,7 +98,6 @@ public class UpmsServiceTest {
     @Test
     public void testUpmsLogService() {
         UpmsLogService upmsLogService = (UpmsLogService) SpringUtil.getBean("upmsLogService");
-        upmsLogService.initMapper();
         int count = upmsLogService.countByExample(new UpmsLogExample());
         System.out.println("testUpmsLogService测试结果：" + count);
     }
