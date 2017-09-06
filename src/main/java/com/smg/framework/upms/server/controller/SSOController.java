@@ -186,7 +186,7 @@ public class SSOController extends BaseController {
         // 跳回原地址
         String redirectUrl = request.getHeader("Referer");
         if (null == redirectUrl) {
-            redirectUrl = "/sso/login";
+            redirectUrl = "/sso/login.jsp";
         }
         return "redirect:" + redirectUrl;
     }
