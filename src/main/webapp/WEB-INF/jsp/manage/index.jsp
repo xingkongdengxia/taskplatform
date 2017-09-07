@@ -94,6 +94,9 @@
                                     <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>
                                 </li>
                                 <li>
+                                    <a class="waves-effect" href="javascript:Tab.addTab('修改密码', '<c:url value="/manage/user/modipass" />');"><i class="zmdi zmdi-archive"></i> 修改密码</a>
+                                </li>
+                                <li>
                                     <a class="waves-effect" href="<c:url value="/sso/logout" />"><i class="zmdi zmdi-run"></i> 退出登录</a>
                                 </li>
                             </ul>
@@ -125,6 +128,9 @@
                         </li>
                         <li>
                             <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>
+                        </li>
+                        <li>
+                            <a class="waves-effect" href="javascript:Tab.addTab('修改密码', '<c:url value="/manage/user/modipass" />');"><i class="zmdi zmdi-archive"></i> 修改密码</a>
                         </li>
                         <li>
                             <a class="waves-effect" href="<c:url value="/sso/logout" />"><i class="zmdi zmdi-run"></i> 退出登录</a>
@@ -191,5 +197,13 @@
         <script src="<c:url value="/resources/admin/js/admin.js" />"></script>
         <script src="<c:url value="/resources/admin/plugins/fullPage/jquery.fullPage.min.js" />"></script>
         <script src="<c:url value="/resources/admin/plugins/fullPage/jquery.jdirk.min.js" />"></script>
+
+        <script>
+            // 修改密码
+            var modifyPasswdDialog;
+            function modifyPasswdAction() {
+                alert("hello");
+            }
+        </script>
     </body>
 </html>

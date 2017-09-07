@@ -22,6 +22,7 @@ import com.smg.framework.upms.dao.model.UpmsUserOrganization;
 import com.smg.framework.upms.dao.model.UpmsUserOrganizationExample;
 import com.smg.framework.upms.dao.model.UpmsUserRole;
 import com.smg.framework.upms.dao.model.UpmsUserRoleExample;
+import com.smg.framework.upms.rpc.api.UpmsApiService;
 import com.smg.framework.upms.rpc.api.UpmsOrganizationService;
 import com.smg.framework.upms.rpc.api.UpmsRoleService;
 import com.smg.framework.upms.rpc.api.UpmsUserOrganizationService;
@@ -36,14 +37,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -83,6 +84,9 @@ public class UpmsUserController extends BaseController {
 
     @Autowired
     private UpmsUserPermissionService upmsUserPermissionService;
+
+    @Autowired
+    private UpmsApiService upmsApiService;
 
     @ApiOperation(value = "用户首页")
     @RequiresPermissions("upms:user:read")
@@ -215,7 +219,7 @@ public class UpmsUserController extends BaseController {
                 } catch (IOException ex) {
                     log.error("文件拷贝出错！", ex);
                 }
-            } 
+            }
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -293,6 +297,44 @@ public class UpmsUserController extends BaseController {
         upmsUser.setPassword(null);
         upmsUser.setUserId(id);
         int count = upmsUserService.updateByPrimaryKeySelective(upmsUser);
+        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+
+    @ApiOperation(value = "修改密码")
+    @RequiresPermissions("upms:security:read")
+    @RequestMapping(value = "/modipass", method = RequestMethod.GET)
+    public String modipass() {
+        return "/manage/user/modipass.jsp";
+    }
+
+    @ApiOperation(value = "修改密码")
+    @RequiresPermissions("upms:security:modipass")
+    @ResponseBody
+    @RequestMapping(value = "/modipassconfirm", method = RequestMethod.POST)
+    public Object modipassconfirm(@RequestParam("oldpassword") String oldpassword,
+            @RequestParam("newpassword") String newpassword) {
+        ComplexResult result = FluentValidator.checkAll()
+                .on(oldpassword, new LengthValidator(5, 32, "旧密码"))
+                .on(newpassword, new LengthValidator(5, 32, "新密码"))
+                .doValidate()
+                .result(ResultCollectors.toComplex());
+        if (!result.isSuccess()) {
+            return new UpmsResult(UpmsResultConstant.INVALID_LENGTH, result.getErrors());
+        }
+        //当前用户
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getPrincipal();
+        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
+        //检查旧密码是否正确
+        String oldpassword_md5 = MD5Util.MD5(oldpassword + upmsUser.getSalt());
+        //如果旧密码不正确
+        if (!oldpassword_md5.equals(upmsUser.getPassword())) {
+            return new UpmsResult(UpmsResultConstant.FAILED, "旧密码不正确！");
+        }
+
+        upmsUser.setPassword(MD5Util.MD5(newpassword + upmsUser.getSalt()));
+        int count = upmsUserService.updateByPrimaryKeySelective(upmsUser);
+
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
 
