@@ -215,10 +215,7 @@ public class UpmsUserController extends BaseController {
                 } catch (IOException ex) {
                     log.error("文件拷贝出错！", ex);
                 }
-            } else {
-                log.error("源文件不存在！");
-            }
-
+            } 
         }
 
         Map<String, Object> result = new HashMap<>();
