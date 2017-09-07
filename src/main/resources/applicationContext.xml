@@ -1,48 +1,328 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/tx
+          http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/util 
+          http://www.springframework.org/schema/util/spring-util.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/cache
+          http://www.springframework.org/schema/cache/spring-cache.xsd">
+   
     
-    <bean id="propertyConfigurer"  
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <property name="locations">  
-            <list>  
-                <value>dbconfig.properties</value>  
-            </list>  
-        </property>  
-    </bean>
+    <!--   ##################    装载开始    ################## -->
     
-    <bean id="ds" class="com.alibaba.druid.pool.DruidDataSource"
-          destroy-method="close">
-        <property name="url" value="${url}" />  
-        <property name="username" value="${username}" />  
-        <property name="password" value="${password}" />  
-        <property name="driverClassName" value="${driverClassName}" />  
-        <property name="filters" value="${filters}" />  
-  
-        <property name="maxActive" value="${maxActive}" />  
-        <property name="initialSize" value="${initialSize}" />  
-        <property name="maxWait" value="${maxWait}" />  
-        <property name="minIdle" value="${minIdle}" />  
-  
-        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />  
-        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />  
-  
-        <property name="validationQuery" value="${validationQuery}" />  
-        <property name="testWhileIdle" value="${testWhileIdle}" />  
-        <property name="testOnBorrow" value="${testOnBorrow}" />  
-        <property name="testOnReturn" value="${testOnReturn}" />  
-        <property name="maxOpenPreparedStatements"  
-                  value="${maxOpenPreparedStatements}" />  
-    </bean>
-
-    <bean id="jdbcTemplate"
-          class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"
-          lazy-init="false" autowire="default" dependency-check="default">
-        <property name="dataSource">
-            <ref bean="ds" />
+    
+    <!-- 装载service -->
+    <context:component-scan base-package="**.service" />     
+    
+    <!-- 装载自定义bean -->
+    <context:component-scan base-package="**.*" use-default-filters="false">
+        <context:include-filter type="assignable" expression="com.smg.framework.common.base.BaseInterface"></context:include-filter>
+    </context:component-scan>  
+    
+      
+    <!--   ##################    装载结束    ################## -->  
+    <!--   ##################    引入properties文件开始    ################## -->
+     
+     
+    <!-- 配置进行解密  -->
+    <bean id="propertyConfigurer" class="com.smg.framework.common.plugin.EncryptPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:upms-client.properties</value>
+            </list>
         </property>
     </bean>
+     
+     
+    <!--   ##################    引入properties文件结束    ################## -->
+    <!--   ##################    数据库配置开始    ################## -->
+    
+    
+    <!-- 主库数据源 -->
+    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!--         基本属性 url、user、password -->
+        <property name="driverClassName" value="${master.jdbc.driver}" />  
+        <property name="url" value="${master.jdbc.url}"/>
+        <property name="username" value="${master.jdbc.username}"/>
+        <property name="password" value="${master.jdbc.password}"/>
+        <!--         配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${master.jdbc.initialSize}"/>
+        <property name="minIdle" value="${master.jdbc.minIdle}"/>
+        <property name="maxActive" value="${master.jdbc.maxActive}"/>
+        <!--         配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${master.jdbc.maxWait}"/>
+        <!--         配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${master.jdbc.timeBetweenEvictionRunsMillis}"/>
+        <!--         配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${master.jdbc.minEvictableIdleTimeMillis}"/>
+        <!--         校验语句 -->
+        <property name="validationQuery" value="${master.jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${master.jdbc.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${master.jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${master.jdbc.testOnReturn}"/>
+        <!--         配置监控统计拦截的filters -->
+        <property name="filters" value="${master.jdbc.filters}"/>
+        <property name="maxOpenPreparedStatements" value="${master.jdbc.maxOpenPreparedStatements}" />
+    </bean>
+    
+    <!-- 动态数据源 -->
+    <bean id="dataSource" class="com.smg.framework.common.db.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <!-- 可配置多个数据源 -->
+                <entry value-ref="masterDataSource" key="masterDataSource"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="masterDataSource"></property>
+    </bean>
+    
+    <!-- 事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- 启动注解事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate" abstract="false">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+    
+    
+    <!--   ##################    数据库配置结束    ################## -->
+    <!--   ##################    Mybatis配置开始    ################## -->
+    
+    
+    <!-- 为Mybatis创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--        <property name="mapperLocations" value="classpath*:com/smg/framework/upms/dao/mapper/*Mapper.xml"/>-->
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:mapper/*.xml</value>
+            </array>
+        </property>
+    </bean>
+    <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="**.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+    
+    
+    <!--   ##################     Mybatis配置结束    ################## -->
+    <!--   ##################     shiro配置开始    ################## -->
+    
+    
+    <!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- 不会暴露给客户端 -->
+        <property name="httpOnly" value="true"/>
+        <!-- 设置Cookie的过期时间，秒为单位，默认-1表示关闭浏览器时过期Cookie -->
+        <property name="maxAge" value="-1"/>
+        <!-- Cookie名称 -->
+        <property name="name" value="${upms.session.id}"/>
+    </bean>
+    
+    <!-- 会话DAO，可重写，持久化session -->
+    <bean id="sessionDAO" class="com.smg.framework.upms.client.shiro.session.UpmsSessionDao"/>
+    
+    <!-- 会话监听器 -->
+    <bean id="sessionListener" class="com.smg.framework.upms.client.shiro.listener.UpmsSessionListener"/>
+    
+    <!-- session工厂 -->
+    <bean id="sessionFactory" class="com.smg.framework.upms.client.shiro.session.UpmsSessionFactory"/>
+    
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 全局session超时时间 -->
+        <property name="globalSessionTimeout" value="${upms.session.timeout}"/>
+        <!-- sessionDAO -->
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
+        <property name="sessionListeners">
+            <list>
+                <ref bean="sessionListener"/>
+            </list>
+        </property>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <!-- realm实现，继承自AuthorizingRealm -->
+    <bean id="upmsRealm" class="com.smg.framework.upms.client.shiro.realm.UpmsRealm"></bean>
+    
+    <!-- rememberMe缓存cookie -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <!-- 不会暴露给客户端 -->
+        <property name="httpOnly" value="true"/>
+        <!-- 记住我cookie生效时间 -->
+        <property name="maxAge" value="${upms.rememberMe.timeout}"/>
+    </bean>
+    
+    <!-- rememberMe管理器 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+    
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms">
+            <list>
+                <ref bean="upmsRealm"/>
+            </list>
+        </property>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+    
+    <!-- 重写authc过滤器 -->
+    <bean id="upmsAuthenticationFilter" class="com.smg.framework.upms.client.shiro.filter.UpmsAuthenticationFilter"/>
+    
+    <!-- 强制退出会话过滤器 -->
+    <bean id="upmsSessionForceLogout" class="com.smg.framework.upms.client.shiro.filter.UpmsSessionForceLogoutFilter"/>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="${upms.sso.server.url}"/>
+        <property name="successUrl" value="${upms.successUrl}"/>
+        <property name="unauthorizedUrl" value="${upms.unauthorizedUrl}"/>
+        <property name="filters">
+            <util:map>
+                <entry key="authc" value-ref="upmsAuthenticationFilter"/>
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /manage/** = upmsSessionForceLogout,authc
+                /manage/index = user
+                /druid/** = user
+                /swagger-ui.html = user
+                /resources/** = anon
+                /** = anon
+            </value>
+        </property>
+    </bean>
+    
+    <!-- 设置SecurityUtils，相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+        <property name="arguments" ref="securityManager"/>
+    </bean>
+    
+    <!-- 开启Shiro Spring AOP权限注解@RequiresPermissions的支持 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    
+    <!-- 系统 -->
+    <bean id="upmsSystemService" class=" com.smg.framework.upms.rpc.service.impl.UpmsSystemServiceImpl"/>
+
+    <!-- 组织 -->
+    <bean id="upmsOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
+
+    <!-- 用户组织 -->
+    <bean id="upmsUserOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl">
+        <property name="upmsUserOrganizationMapper"  ref="upmsUserOrganizationMapper"/>
+    </bean>
+
+    <!-- 用户 -->
+    <bean id="upmsUserService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserServiceImpl">
+        <property name="upmsUserMapper"  ref="upmsUserMapper"/>
+    </bean>
+
+    <!-- 角色 -->
+    <bean id="upmsRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
+
+    <!-- 权限 -->
+    <bean id="upmsPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl">
+        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>    
+        <property name="upmsPermissionMapper"  ref="upmsPermissionMapper"/>
+        <property name="upmsApiService"  ref="upmsApiService"/>
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>
+    </bean>
+
+    <!-- 角色权限 -->
+    <bean id="upmsRolePermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl">
+        <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>    
+    </bean>
+
+    <!-- 用户权限 -->
+    <bean id="upmsUserPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl">
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>    
+    </bean>
+
+    <!-- 用户角色 -->
+    <bean id="upmsUserRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl">
+        <property name="upmsUserRoleMapper"  ref="upmsUserRoleMapper"/>    
+    </bean>
+        
+
+    <!-- 操作日志 -->
+    <bean id="upmsLogService" class="com.smg.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
+    
+    <!-- 接口服务 -->
+    <bean id="upmsApiService" class="com.smg.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
+        <property name="upmsUserMapper"  ref="upmsUserMapper"/> 
+        <property name="upmsApiMapper"  ref="upmsApiMapper"/>
+        <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>
+        <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>
+        <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>
+        <property name="upmsOrganizationMapper"  ref="upmsOrganizationMapper"/>
+        <property name="upmsLogMapper"  ref="upmsLogMapper"/>    
+    </bean>
+    
+    <!--   ##################     shiro配置结束    ################## -->
+    <!--   ##################     ehcache配置开始    ################## -->
+    
+    
+    <!-- 支持缓存注解 -->
+    <cache:annotation-driven cache-manager="cacheManager" />
+
+    <!-- 默认是cacheManager -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager"  ref="cacheManagerFactory"/>
+    </bean>
+
+    <!-- cache管理器配置 -->
+    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation"  value="classpath:ehcache.xml"/>
+        <property name="shared" value="true" />
+    </bean>
+    
+    
+    
+    <!--   ##################     ehcache配置结束    ################## -->
+    <!--   ##################     其他Bean配置开始    ################## -->
+
+
+    <!-- 启动时初始化Spring上下文环境工具类 -->
+    <bean id="springContextUtil" class="com.smg.framework.common.utils.SpringContextUtil"></bean>
     
     <bean id="pageDAO"
           class="com.smg.framework.pagination.PageDaoImpl">
@@ -56,7 +336,9 @@
         <property name="pd">
             <ref bean="pageDAO" />
         </property>
-         <property name="pageSize" value="5" />
+        <property name="pageSize" value="5" />
     </bean>
+    
+    <!--   ##################     其他Bean配置结束    ################## -->
 
 </beans>

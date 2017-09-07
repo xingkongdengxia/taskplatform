@@ -31,7 +31,7 @@ public class PageController {
         
         model.addAttribute("page", page);
         
-        return "examples/pagination/list";
+        return "examples/pagination/list.jsp";
     }
 
 }
