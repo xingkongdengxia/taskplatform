@@ -40,7 +40,7 @@
         <property name="locations">
             <list>
                 <value>classpath:jdbc.properties</value>
-                <value>classpath:upms-client.properties</value>
+                <value>classpath:upms-client.properties</value>                
             </list>
         </property>
     </bean>
