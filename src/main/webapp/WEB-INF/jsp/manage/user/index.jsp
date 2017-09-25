@@ -17,6 +17,7 @@
     </head>
     <body>
         <div id="main">
+             <c:import url="/resources/inc/search.jsp" />
             <div id="toolbar">
                 <shiro:hasPermission name="upms:user:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增用户</a></shiro:hasPermission>
                 <shiro:hasPermission name="upms:user:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑用户</a></shiro:hasPermission>
@@ -36,7 +37,7 @@
                     url: '${basePath}/manage/user/list',
                     height: getHeight(),
                     striped: true,
-                    search: true,
+                    search: false,
                     showRefresh: true,
                     showColumns: true,
                     minimumCountColumns: 2,
@@ -53,6 +54,14 @@
                     idField: 'userId',
                     maintainSelected: true,
                     toolbar: '#toolbar',
+                    queryParams: function (params) {
+                        var str_search = $('#txt_search_key').val();
+                        return {
+                            offset: params.offset,
+                            limit: params.limit,
+                            search: str_search
+                        };
+                    },
                     columns: [
                         {field: 'ck', checkbox: true},
                         {field: 'userId', title: '编号', sortable: true, align: 'center'},
@@ -336,6 +345,16 @@
                         }
                     });
                 }
+            }
+            
+            //折叠查询条件
+            $('#collapseone').collapse('hide');
+
+            function search() {
+
+                // 刷新表格  
+                $('#table').bootstrapTable('refresh');
+
             }
         </script>
     </body>

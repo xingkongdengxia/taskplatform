@@ -126,7 +126,7 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         if (StringUtils.isNotBlank(code)) {
             // HttpPost去校验code
             try {
-                String sso_server_url = PropertiesFileUtil.getInstance("upms-client").get("upms.sso.server.url");
+                String sso_server_url = PropertiesFileUtil.getInstance("upms-client").get("upms.sso.server.url");                
                 HttpClient httpclient = HttpClientBuilder.create().build();
                 HttpPost httpPost = new HttpPost(sso_server_url + "/sso/code");
 
