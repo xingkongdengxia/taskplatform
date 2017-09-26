@@ -4,7 +4,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <a data-toggle="collapse" data-parent="#main" href="#collapseone">
-            查询条件(点击折叠)
+            <strong>查询条件(点击折叠)</strong>
         </a> 
     </div>
     <div id="collapseone" class="panel-collapse collapse in">

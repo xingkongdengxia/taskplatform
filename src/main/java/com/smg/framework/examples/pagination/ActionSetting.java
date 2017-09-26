@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class ActionSetting {
 
-    private int id;
+    public int id;
 
     private String actionname;
 
