@@ -184,11 +184,11 @@ public class SSOController extends BaseController {
         // shiro退出登录
         SecurityUtils.getSubject().logout();
         // 跳回原地址
-        String redirectUrl = request.getHeader("Referer");
-        if (null == redirectUrl) {
-            redirectUrl = "/sso/login.jsp";
-        }
-        return "redirect:" + redirectUrl;
+ //        String redirectUrl = request.getHeader("Referer");
+//        if (null == redirectUrl) {
+//            redirectUrl = "/sso/login.jsp";
+//        }
+        return "/sso/login.jsp";
     }
 
 }
