@@ -38,7 +38,7 @@ public class FatherToChildUtil {
                 Object result = cm.invoke(child, obj);
             } catch (SecurityException | IllegalArgumentException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 
-                log.error(e);
+                log.debug(e);
             }
         }
     }
