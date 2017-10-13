@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.codec.Base64;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -30,8 +31,9 @@ public class AESUtil {
 
     /**
      * 加密 1.构造密钥生成器 2.根据ecnodeRules规则初始化密钥生成器 3.产生密钥 4.创建和初始化密码器 5.内容加密 6.返回字符串
+     *
      * @param content
-     * @return 
+     * @return
      */
     public static String AESEncode(String content) {
         try {
@@ -112,7 +114,7 @@ public class AESUtil {
 
     public static void main(String[] args) {
         String[] keys = {
-            "", "123456","我是中国人test"
+            "", "123456", "我是中国人test"
         };
 
         System.out.println("key | AESEncode | AESDecode");
@@ -123,6 +125,12 @@ public class AESUtil {
             String decryptString = AESDecode(encryptString);
             System.out.println(decryptString);
         }
+
+        String str = "framework0934";
+        String encodeStr = Base64.encodeToString(str.getBytes());
+        System.out.println("encodeStr:" + encodeStr);
+        String decodeStr = Base64.decodeToString(encodeStr);
+        System.out.println("decodeStr:" + decodeStr);
     }
 
 }
