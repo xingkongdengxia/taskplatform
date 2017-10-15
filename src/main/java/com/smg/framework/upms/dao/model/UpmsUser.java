@@ -1,10 +1,12 @@
 package com.smg.framework.upms.dao.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author justincai
  */
-public class UpmsUser {
+public class UpmsUser implements Serializable {
 
     /**
      * 编号
