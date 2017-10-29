@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>权限管理系统</title>
+        <title>SMG权限管理中心</title>
 
         <link href="<c:url value="/resources/admin/plugins/bootstrap-3.3.0/css/bootstrap.min.css" />" rel="stylesheet"/>
         <link href="<c:url value="/resources/admin/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" />" rel="stylesheet"/>
@@ -40,7 +40,7 @@
                     </div>
                 </li>
                 <li id="logo" class="hidden-xs">
-                    <span id="system_title">权限管理系统</span>
+                    <span id="system_title">SMG权限管理中心</span>
                 </li>
                 <li class="pull-right">
                     <ul class="hi-menu">
@@ -154,7 +154,7 @@
                                                 <c:if test="${subUpmsPermission.systemId == upmsSystem.systemId}">
                                                     <c:set var="systemBasePath" value="${upmsSystem.basepath}"/></c:if>
                                             </c:forEach>
-                                            <li><a class="waves-effect" href="javascript:Tab.addTab('${subUpmsPermission.name}', '<c:url value="${subUpmsPermission.uri}" />');">${subUpmsPermission.name}</a></li>
+                                            <li><a class="waves-effect" href="javascript:Tab.addTab('${subUpmsPermission.name}', '${systemBasePath}${subUpmsPermission.uri}');">${subUpmsPermission.name}</a></li>
                                             </c:if>
                                         </c:forEach>
                                 </ul>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="content_main">
                     <div id="iframe_home" class="iframe cur">
-                        <p><h4>欢迎进入用户权限管理系统</h4></p>
+                        <p><h4>欢迎进入SMG权限管理中心</h4></p>
                     </div>
                 </div>
             </section>
