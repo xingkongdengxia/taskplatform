@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="icon">图标</label>
-            <input id="icon" type="text" class="form-control" name="icon" maxlength="20" value="${system.icon}">
+            <input id="icon" type="text" class="form-control" name="icon" maxlength="50" value="${system.icon}">
         </div>
         <div class="form-group">
             <label for="title">标题</label>
