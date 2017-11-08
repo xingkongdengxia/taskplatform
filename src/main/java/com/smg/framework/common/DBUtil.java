@@ -102,4 +102,25 @@ public class DBUtil {
         return jobReport;
 
     }
+
+    /**
+     * 确定数据表是否存在
+     *
+     * @param database 数据库名
+     * @param tablename 表名
+     * @return
+     */
+    public static boolean isTableExist(String database, String tablename) {
+
+        String sql = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name = '" + tablename + "';";
+        log.debug("sql:" + sql);
+
+        JdbcTemplate jt = getJdbcTemplate();
+        Integer rowCount = jt.queryForObject(sql, null, Integer.class);
+
+        log.debug("rowCount:" + rowCount);
+
+        return rowCount > 0;
+
+    }
 }
