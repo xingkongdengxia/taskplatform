@@ -62,25 +62,7 @@ public class DBUtilTest {
         System.out.println("Number of records : " + rowCount);
         assertNotNull(srs);
     }
-
-    /**
-     * Test of copyTable2Table method, of class DBUtil.
-     */
-    @Test
-    public void testCopyTable2Table() {
-        System.out.println("copyTable2Table");
-        DataSource fromDS = null;
-        DataSource toDS = null;
-        String query = "";
-        String[] fields = null;
-        String insertSQL = "";
-        Class recordClass = null;
-        JobReport expResult = null;
-        JobReport result = DBUtil.copyTable2Table(fromDS, toDS, query, fields, insertSQL, recordClass);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
 
     /**
      * Test of isTableExist method, of class DBUtil.
