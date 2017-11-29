@@ -1,5 +1,7 @@
 package com.smg.framework.common;
 
+import com.smg.framework.common.utils.DateFormatUtil;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
@@ -121,6 +123,28 @@ public class DBUtil {
         log.debug("rowCount:" + rowCount);
 
         return rowCount > 0;
+
+    }
+
+    /**
+     * 确定数据表的生成时间
+     *
+     * @param database 数据库名
+     * @param tablename 表名
+     * @return
+     */
+    public static String getTableCreateTime(String database, String tablename) {
+
+        String sql = "SELECT create_time FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name = '" + tablename + "';";
+        log.debug("sql:" + sql);
+
+        JdbcTemplate jt = getJdbcTemplate();
+        Timestamp ts = jt.queryForObject(sql, null, Timestamp.class);
+        log.debug("ts:" + ts);
+
+        String ctime = DateFormatUtil.formatTime(ts.getTime());
+
+        return ctime;
 
     }
 }

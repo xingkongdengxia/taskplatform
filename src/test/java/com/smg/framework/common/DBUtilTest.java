@@ -1,7 +1,6 @@
 package com.smg.framework.common;
 
 import javax.sql.DataSource;
-import org.easybatch.core.job.JobReport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -62,7 +61,6 @@ public class DBUtilTest {
         System.out.println("Number of records : " + rowCount);
         assertNotNull(srs);
     }
-    
 
     /**
      * Test of isTableExist method, of class DBUtil.
@@ -75,6 +73,17 @@ public class DBUtilTest {
         boolean expResult = true;
         boolean result = DBUtil.isTableExist(database, tablename);
         assertEquals(expResult, result);
+
+    }
+
+    @Test
+    public void testGetTableCreateTime() {
+        System.out.println("getTableCreateTime");
+        String database = "test";
+        String tablename = "actionsetting";
+
+        String result = DBUtil.getTableCreateTime(database, tablename);
+        System.out.println(result);
 
     }
 
