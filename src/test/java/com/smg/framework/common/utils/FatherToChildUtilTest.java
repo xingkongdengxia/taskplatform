@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.smg.framework.common.utils;
 
-import com.smg.framework.examples.pagination.ActionSetting;
-import com.smg.framework.examples.pagination.ActionSettingChild;
+import com.smg.framework.examples.fathertochild.UpmsUserChild;
+import com.smg.framework.upms.dao.model.UpmsUser;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author root
+ * @author justincai
  */
 public class FatherToChildUtilTest {
 
@@ -45,16 +40,19 @@ public class FatherToChildUtilTest {
     @Test
     public void testFatherToChild() throws Exception {
         System.out.println("fatherToChild");
-        ActionSetting father = new ActionSetting();
-        father.setId(1);
-        father.setActionname("father:actionname");
-        father.setActionclass("father:actionclass");
-        father.setActionshowname("father:actionshowname");
-        ActionSettingChild child = new ActionSettingChild();
+        UpmsUser father = new UpmsUser();
+        father.setUserId(1);
+        father.setUsername("father:username");
+        father.setRealname("father:realname");
+        
+        UpmsUserChild child = new UpmsUserChild();
         child.setAnotherProp("child:anotherProp");
         FatherToChildUtil.fatherToChild(father, child);
 
         System.out.println(child.toString());
+        
+        
+      
     }
 
 }

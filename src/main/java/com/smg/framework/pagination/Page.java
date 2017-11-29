@@ -1,4 +1,3 @@
-
 package com.smg.framework.pagination;
 
 import java.util.List;
@@ -6,21 +5,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- *分页功能-Page对象，存放每页所有对象
+ * 分页功能-Page对象，存放每页所有对象
+ *
  * @author justincai
  */
 public class Page {
-    
+
     private static final Log log = LogFactory.getLog(Page.class);
 
-    private int totalRecord;// 表示查询后一共得到多少条结果记录
-    private int pageSize; // 表示页面一次要显示多少条记录
-    private int totalPage;// 表示将所有的记录进行分页后，一共有多少页
-    private int startIndex;// 表示从所有的结果记录中的哪一个编号开始分页查询
-    private int currentPage; // 表示用户想看的页数
+    private final int totalRecord;// 表示查询后一共得到多少条结果记录
+    private final int pageSize; // 表示页面一次要显示多少条记录
+    private final int totalPage;// 表示将所有的记录进行分页后，一共有多少页
+    private final int startIndex;// 表示从所有的结果记录中的哪一个编号开始分页查询
+    private final int currentPage; // 表示用户想看的页数
 
     private List list = null;// list集合是用来装载一个页面中的所有记录的
-
 
     public Page(int pageNum, int totalRecord, int pageSize) {
         this.currentPage = pageNum;
@@ -35,16 +34,15 @@ public class Page {
         } else {
             this.totalPage = this.totalRecord / this.pageSize + 1;
         }
-        
-        log.info("totalRecord:" + totalRecord + ", pageSize:" + pageSize + ", totalPage:" 
-        + totalPage + ", startIndex:" + startIndex + ", currentPage:" + currentPage);
+
+        log.info("totalRecord:" + totalRecord + ", pageSize:" + pageSize + ", totalPage:"
+                + totalPage + ", startIndex:" + startIndex + ", currentPage:" + currentPage);
 
     }
 
     public int getTotalRecord() {
         return totalRecord;
     }
-
 
     public int getPageSize() {
         return pageSize;
@@ -54,22 +52,19 @@ public class Page {
         return totalPage;
     }
 
-
     public int getStartIndex() {
         return startIndex;
     }
-
 
     public int getCurrentPage() {
         return currentPage;
     }
 
-
     public List getList() {
         return list;
     }
-    
-     public void setList(List list) {
+
+    public void setList(List list) {
         this.list = list;
     }
 

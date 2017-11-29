@@ -3,6 +3,7 @@ package com.smg.framework.common.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,17 +30,22 @@ public class FatherToChildUtil {
         Class fatherClass = father.getClass();
         Field ff[] = fatherClass.getDeclaredFields();
         for (Field f : ff) {
-            //取出每一个属性，如deleteDate 
-            Class type = f.getType();
-            try {
-                Method fm = fatherClass.getMethod("get" + upperHeadChar(f.getName()));//方法getDeleteDate
-                Object obj = fm.invoke(father);//取出属性值  
-                Method cm = child.getClass().getDeclaredMethod("set" + upperHeadChar(f.getName()), type);
-                Object result = cm.invoke(child, obj);
-            } catch (SecurityException | IllegalArgumentException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            //过滤掉字段serialVersionUID
+            if (!StringUtils.equals("serialVersionUID", f.getName())) {
+                log.debug("Field f:" + f.getName());
+                //取出每一个属性，如deleteDate 
+                Class type = f.getType();
+                try {
+                    Method fm = fatherClass.getMethod("get" + upperHeadChar(f.getName()));//方法getDeleteDate
+                    Object obj = fm.invoke(father);//取出属性值  
+                    Method cm = child.getClass().getDeclaredMethod("set" + upperHeadChar(f.getName()), type);
+                    Object result = cm.invoke(child, obj);
+                } catch (SecurityException | IllegalArgumentException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 
-                log.debug(e);
+                    log.debug(e);
+                }
             }
+
         }
     }
 

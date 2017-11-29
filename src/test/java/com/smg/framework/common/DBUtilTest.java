@@ -1,7 +1,6 @@
 package com.smg.framework.common;
 
 import javax.sql.DataSource;
-import org.easybatch.core.job.JobReport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -64,25 +63,6 @@ public class DBUtilTest {
     }
 
     /**
-     * Test of copyTable2Table method, of class DBUtil.
-     */
-    @Test
-    public void testCopyTable2Table() {
-        System.out.println("copyTable2Table");
-        DataSource fromDS = null;
-        DataSource toDS = null;
-        String query = "";
-        String[] fields = null;
-        String insertSQL = "";
-        Class recordClass = null;
-        JobReport expResult = null;
-        JobReport result = DBUtil.copyTable2Table(fromDS, toDS, query, fields, insertSQL, recordClass);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of isTableExist method, of class DBUtil.
      */
     @Test
@@ -93,6 +73,17 @@ public class DBUtilTest {
         boolean expResult = true;
         boolean result = DBUtil.isTableExist(database, tablename);
         assertEquals(expResult, result);
+
+    }
+
+    @Test
+    public void testGetTableCreateTime() {
+        System.out.println("getTableCreateTime");
+        String database = "test";
+        String tablename = "actionsetting";
+
+        String result = DBUtil.getTableCreateTime(database, tablename);
+        System.out.println(result);
 
     }
 
