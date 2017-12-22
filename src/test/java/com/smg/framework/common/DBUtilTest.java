@@ -87,4 +87,15 @@ public class DBUtilTest {
 
     }
 
+    @Test
+    public void testDeleteTable() {
+        System.out.println("deleteTable");
+        String database = "test";
+        String tablename = "tweet";
+
+        boolean result = DBUtil.deleteTable(database, tablename);
+        System.out.println(result);
+
+    }
+
 }

@@ -147,4 +147,25 @@ public class DBUtil {
         return ctime;
 
     }
+
+    /**
+     * 删除数据表
+     *
+     * @param database 数据库名
+     * @param tablename 表名
+     * @return 成功或表不存在，返回true；失败，返回false
+     */
+    public static boolean deleteTable(String database, String tablename) {
+        JdbcTemplate jt = getJdbcTemplate();
+        //判断表是否存在,如果存在则删除                
+        if (isTableExist(database, tablename)) {
+            String delsql = "drop table " + database + "." + tablename + ";";
+            log.debug("删除数据表：" + delsql);
+            jt.execute(delsql);
+        } else {
+            log.debug("数据表不存在：" + tablename);
+        }
+        return true;
+
+    }
 }
