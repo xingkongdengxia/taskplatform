@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"       
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd         
+          http://www.springframework.org/schema/util 
+          http://www.springframework.org/schema/util/spring-util.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd">
+   
+    
+    
+    <!--   ##################     定时器配置开始    ################## -->
+    
+    <!--   ##################     Example定时器配置开始    ################## -->    
+    <!-- Example定时器  配置作业 -->
+    <bean name="quartzExampleJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.smg.framework.scheduler.jobs.QuartzExampleJob" />
+        <property name="durability" value="true" /> 
+    </bean>
+    
+    <!-- Example定时器  配置简单触发器 -->
+    <bean id="quartzExampleTrigger"  class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="quartzExampleJobDetail" />
+        <property name="startDelay" value="300000" />
+        <property name="repeatInterval" value="300000" />
+        <property name="repeatCount" value="1" />       
+    </bean>
+    
+    <!-- Example定时器  配置cron触发器 -->
+    <bean id="quartzExampleCronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="quartzExampleJobDetail" /> 
+        <!-- 每天凌晨1点触发 -->
+        <property name="cronExpression" value="0 0 1 ? * *" /> 
+    </bean>
+    
+    <!--   ##################     Example定时器配置结束    ################## -->    
+    <!-- 配置调度器 可以把多个作业和触发器统一配置-->
+    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">  
+            <list>  
+                <ref bean="quartzExampleJobDetail" />                                
+            </list>  
+        </property> 
+        <property name="triggers">  
+            <list>  
+                <ref bean="quartzExampleCronTrigger" />                             
+            </list>  
+        </property> 
+    </bean>
+    
+    <!--   ##################     定时器配置结束    ################## -->
+    
+
+</beans>
