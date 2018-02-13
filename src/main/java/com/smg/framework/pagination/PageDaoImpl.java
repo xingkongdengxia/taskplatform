@@ -20,6 +20,17 @@ public class PageDaoImpl implements PageDao {
     private JdbcTemplate jdbcTemplate;
     private int pageSize = 10; //默认每页显示10条
 
+    //数据库类型为mysql、oracle，默认是mysql
+    private String dialect = "mysql";
+
+    public String getDialect() {
+        return dialect;
+    }
+
+    public void setDialect(String dialect) {
+        this.dialect = dialect;
+    }
+
     /* 
      * 获得总记录数
      */
@@ -44,12 +55,19 @@ public class PageDaoImpl implements PageDao {
     @Override
     public Page getPage(int pageNum, Class clazz, String sql, int totalRecord) {
         Page page = new Page(pageNum, totalRecord, pageSize);
-        sql = sql + " limit " + page.getStartIndex() + "," + page.getPageSize();
-        log.info(sql);
+        if ("mysql".equals(dialect)) {
+            sql = sql + " limit " + page.getStartIndex() + "," + page.getPageSize();
+        } else if ("oracle".equals(dialect)) {
+            int maxrownum = page.getStartIndex() + page.getPageSize();
+            sql = "select * from (select ROW_.*, ROWNUM ROWNUM_ from (" + sql
+                    + ") ROW_ where ROWNUM <= " + maxrownum + ") where ROWNUM_ >= " + page.getStartIndex();
+        }
+
+        log.debug("dialect:" + dialect + ",sql:" + sql);
 
         List list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(clazz));
         page.setList(list);
-        log.info("currunt page list num:" + list.size());
+        log.debug("currunt page list num:" + list.size());
         return page;
     }
 
