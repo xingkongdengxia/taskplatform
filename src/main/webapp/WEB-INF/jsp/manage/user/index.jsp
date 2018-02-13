@@ -17,7 +17,7 @@
     </head>
     <body>
         <div id="main">
-             <c:import url="/resources/inc/search.jsp" />
+            <c:import url="/resources/inc/search.jsp" />
             <div id="toolbar">
                 <shiro:hasPermission name="upms:user:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增用户</a></shiro:hasPermission>
                 <shiro:hasPermission name="upms:user:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑用户</a></shiro:hasPermission>
@@ -346,7 +346,7 @@
                     });
                 }
             }
-            
+
             //折叠查询条件
             $('#collapseone').collapse('hide');
 
@@ -356,6 +356,9 @@
                 $('#table').bootstrapTable('refresh');
 
             }
+
+            //初始化搜索框
+            $('#txt_search_key_placeholder').text("帐号、姓名");
         </script>
     </body>
 </html>
