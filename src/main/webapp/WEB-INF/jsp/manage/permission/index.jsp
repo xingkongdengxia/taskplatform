@@ -259,6 +259,9 @@
                 $('#table').bootstrapTable('refresh');
 
             }
+            
+            //初始化搜索框
+            $('#txt_search_key_placeholder').text("权限名称");
         </script>
     </body>
 </html>

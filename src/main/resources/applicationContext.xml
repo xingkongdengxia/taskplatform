@@ -351,6 +351,7 @@
         <property name="jdbcTemplate">
             <ref bean="jdbcTemplate" />
         </property>
+        <property name="dialect" value="mysql" />
     </bean>
     
     <bean id="pageService"
