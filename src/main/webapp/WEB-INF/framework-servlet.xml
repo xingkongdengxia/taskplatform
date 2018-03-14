@@ -25,7 +25,7 @@
 <!--         获取登录信息 -->
         <mvc:interceptor>
             <mvc:mapping path="/manage/**"/>
-            <bean class="com.smg.framework.upms.server.interceptor.UpmsInterceptor"></bean>
+            <bean class="com.magicube.framework.upms.server.interceptor.UpmsInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
     
@@ -70,7 +70,7 @@
     <mvc:default-servlet-handler />
     <mvc:annotation-driven />
     
-    <context:component-scan base-package="com.smg" />
+    <context:component-scan base-package="com.magicube" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="order" value="1"/>
