@@ -27,7 +27,7 @@
     
     <!-- 装载自定义bean -->
     <context:component-scan base-package="**.*" use-default-filters="false">
-        <context:include-filter type="assignable" expression="com.smg.framework.common.base.BaseInterface"></context:include-filter>
+        <context:include-filter type="assignable" expression="com.magicube.framework.common.base.BaseInterface"></context:include-filter>
     </context:component-scan>  
     
       
@@ -36,7 +36,7 @@
      
      
     <!-- 配置进行解密  -->
-    <bean id="propertyConfigurer" class="com.smg.framework.common.plugin.EncryptPropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="com.magicube.framework.common.plugin.EncryptPropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:jdbc.properties</value>
@@ -79,7 +79,7 @@
     </bean>
     
     <!-- 动态数据源 -->
-    <bean id="dataSource" class="com.smg.framework.common.db.DynamicDataSource">
+    <bean id="dataSource" class="com.magicube.framework.common.db.DynamicDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <!-- 可配置多个数据源 -->
@@ -142,13 +142,13 @@
     </bean>
     
     <!-- 会话DAO，可重写，持久化session -->
-    <bean id="sessionDAO" class="com.smg.framework.upms.client.shiro.session.UpmsSessionDao"/>
+    <bean id="sessionDAO" class="com.magicube.framework.upms.client.shiro.session.UpmsSessionDao"/>
     
     <!-- 会话监听器 -->
-    <bean id="sessionListener" class="com.smg.framework.upms.client.shiro.listener.UpmsSessionListener"/>
+    <bean id="sessionListener" class="com.magicube.framework.upms.client.shiro.listener.UpmsSessionListener"/>
     
     <!-- session工厂 -->
-    <bean id="sessionFactory" class="com.smg.framework.upms.client.shiro.session.UpmsSessionFactory"/>
+    <bean id="sessionFactory" class="com.magicube.framework.upms.client.shiro.session.UpmsSessionFactory"/>
     
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
@@ -168,7 +168,7 @@
     </bean>
     
     <!-- realm实现，继承自AuthorizingRealm -->
-    <bean id="upmsRealm" class="com.smg.framework.upms.client.shiro.realm.UpmsRealm"></bean>
+    <bean id="upmsRealm" class="com.magicube.framework.upms.client.shiro.realm.UpmsRealm"></bean>
     
     <!-- rememberMe缓存cookie -->
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -198,10 +198,10 @@
     </bean>
     
     <!-- 重写authc过滤器 -->
-    <bean id="upmsAuthenticationFilter" class="com.smg.framework.upms.client.shiro.filter.UpmsAuthenticationFilter"/>
+    <bean id="upmsAuthenticationFilter" class="com.magicube.framework.upms.client.shiro.filter.UpmsAuthenticationFilter"/>
     
     <!-- 强制退出会话过滤器 -->
-    <bean id="upmsSessionForceLogout" class="com.smg.framework.upms.client.shiro.filter.UpmsSessionForceLogoutFilter"/>
+    <bean id="upmsSessionForceLogout" class="com.magicube.framework.upms.client.shiro.filter.UpmsSessionForceLogoutFilter"/>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -241,26 +241,26 @@
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     
     <!-- 系统 -->
-    <bean id="upmsSystemService" class=" com.smg.framework.upms.rpc.service.impl.UpmsSystemServiceImpl"/>
+    <bean id="upmsSystemService" class=" com.magicube.framework.upms.rpc.service.impl.UpmsSystemServiceImpl"/>
 
     <!-- 组织 -->
-    <bean id="upmsOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
+    <bean id="upmsOrganizationService" class="com.magicube.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
 
     <!-- 用户组织 -->
-    <bean id="upmsUserOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl">
+    <bean id="upmsUserOrganizationService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl">
         <property name="upmsUserOrganizationMapper"  ref="upmsUserOrganizationMapper"/>
     </bean>
 
     <!-- 用户 -->
-    <bean id="upmsUserService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserServiceImpl">
+    <bean id="upmsUserService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserServiceImpl">
         <property name="upmsUserMapper"  ref="upmsUserMapper"/>
     </bean>
 
     <!-- 角色 -->
-    <bean id="upmsRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
+    <bean id="upmsRoleService" class="com.magicube.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
 
     <!-- 权限 -->
-    <bean id="upmsPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl">
+    <bean id="upmsPermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl">
         <property name="upmsSystemMapper"  ref="upmsSystemMapper"/>    
         <property name="upmsPermissionMapper"  ref="upmsPermissionMapper"/>
         <property name="upmsApiService"  ref="upmsApiService"/>
@@ -268,26 +268,26 @@
     </bean>
 
     <!-- 角色权限 -->
-    <bean id="upmsRolePermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl">
+    <bean id="upmsRolePermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl">
         <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>    
     </bean>
 
     <!-- 用户权限 -->
-    <bean id="upmsUserPermissionService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl">
+    <bean id="upmsUserPermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl">
         <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>    
     </bean>
 
     <!-- 用户角色 -->
-    <bean id="upmsUserRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl">
+    <bean id="upmsUserRoleService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl">
         <property name="upmsUserRoleMapper"  ref="upmsUserRoleMapper"/>    
     </bean>
         
 
     <!-- 操作日志 -->
-    <bean id="upmsLogService" class="com.smg.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
+    <bean id="upmsLogService" class="com.magicube.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
     
     <!-- 接口服务 -->
-    <bean id="upmsApiService" class="com.smg.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
+    <bean id="upmsApiService" class="com.magicube.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
         <property name="upmsUserMapper"  ref="upmsUserMapper"/> 
         <property name="upmsApiMapper"  ref="upmsApiMapper"/>
         <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>
@@ -344,10 +344,10 @@
 
 
     <!-- 启动时初始化Spring上下文环境工具类 -->
-    <bean id="springContextUtil" class="com.smg.framework.common.utils.SpringContextUtil"></bean>
+    <bean id="springContextUtil" class="com.magicube.framework.common.utils.SpringContextUtil"></bean>
     
     <bean id="pageDAO"
-          class="com.smg.framework.pagination.PageDaoImpl">
+          class="com.magicube.framework.pagination.PageDaoImpl">
         <property name="jdbcTemplate">
             <ref bean="jdbcTemplate" />
         </property>
@@ -355,7 +355,7 @@
     </bean>
     
     <bean id="pageService"
-          class="com.smg.framework.examples.pagination.PageService">
+          class="com.magicube.framework.examples.pagination.PageService">
         <property name="pd">
             <ref bean="pageDAO" />
         </property>

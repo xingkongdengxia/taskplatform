@@ -1,0 +1,59 @@
+package com.magicube.framework.upms.server.controller;
+
+import com.magicube.framework.common.base.BaseController;
+import com.magicube.framework.upms.dao.model.UpmsPermission;
+import com.magicube.framework.upms.dao.model.UpmsSystem;
+import com.magicube.framework.upms.dao.model.UpmsSystemExample;
+import com.magicube.framework.upms.dao.model.UpmsUser;
+import com.magicube.framework.upms.rpc.api.UpmsApiService;
+import com.magicube.framework.upms.rpc.api.UpmsSystemService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * 后台controller
+ *
+ * @author justincai
+ */
+@Controller
+@RequestMapping("/manage")
+@Api(value = "后台管理")
+public class ManageController extends BaseController {
+
+    private static final Log log = LogFactory.getLog(ManageController.class);
+
+    @Autowired
+    private UpmsSystemService upmsSystemService;
+
+    @Autowired
+    private UpmsApiService upmsApiService;
+
+    @ApiOperation(value = "后台首页")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(ModelMap modelMap) {
+        // 已注册系统
+        UpmsSystemExample upmsSystemExample = new UpmsSystemExample();
+        upmsSystemExample.createCriteria()
+                .andStatusEqualTo((byte) 1);
+        List<UpmsSystem> upmsSystems = upmsSystemService.selectByExample(upmsSystemExample);
+        modelMap.put("upmsSystems", upmsSystems);
+        // 当前登录用户权限
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getPrincipal();
+        UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
+        List<UpmsPermission> upmsPermissions = upmsApiService.selectUpmsPermissionByUpmsUserId(upmsUser.getUserId());
+        modelMap.put("upmsPermissions", upmsPermissions);
+        return "/manage/index.jsp";
+    }
+
+}
