@@ -6,6 +6,7 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -16,7 +17,9 @@
           http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context.xsd
           http://www.springframework.org/schema/cache
-          http://www.springframework.org/schema/cache/spring-cache.xsd">
+          http://www.springframework.org/schema/cache/spring-cache.xsd
+          http://code.alibabatech.com/schema/dubbo
+          http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
    
     
     <!--   ##################    装载开始    ################## -->
@@ -47,6 +50,18 @@
      
      
     <!--   ##################    引入properties文件结束    ################## -->
+    <!--   ##################    dubbo配置开始    ################## -->
+    
+    <dubbo:application name="framework-upms-rpc-service"/>
+
+    <dubbo:registry address="zookeeper://zkserver:2181"/>
+
+    <dubbo:protocol name="dubbo" port="20882"/>
+
+    <dubbo:monitor protocol="registry"/>
+    
+    
+    <!--   ##################    dubbo结束    ################## -->
     <!--   ##################    数据库配置开始    ################## -->
     
     
@@ -241,23 +256,28 @@
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     
     <!-- 系统 -->
-    <bean id="upmsSystemService" class=" com.magicube.framework.upms.rpc.service.impl.UpmsSystemServiceImpl"/>
+    <bean id="upmsSystemService" class=" com.smg.framework.upms.rpc.service.impl.UpmsSystemServiceImpl"/>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsSystemService" ref="upmsSystemService" timeout="10000"/>
 
     <!-- 组织 -->
-    <bean id="upmsOrganizationService" class="com.magicube.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
+    <bean id="upmsOrganizationService" class="com.smg.framework.upms.rpc.service.impl.UpmsOrganizationServiceImpl"/>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsOrganizationService" ref="upmsOrganizationService" timeout="10000"/>
 
     <!-- 用户组织 -->
     <bean id="upmsUserOrganizationService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserOrganizationServiceImpl">
         <property name="upmsUserOrganizationMapper"  ref="upmsUserOrganizationMapper"/>
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsUserOrganizationService" ref="upmsUserOrganizationService" timeout="10000"/>
 
     <!-- 用户 -->
     <bean id="upmsUserService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserServiceImpl">
         <property name="upmsUserMapper"  ref="upmsUserMapper"/>
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsUserService" ref="upmsUserService" timeout="10000"/>
 
     <!-- 角色 -->
-    <bean id="upmsRoleService" class="com.magicube.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
+    <bean id="upmsRoleService" class="com.smg.framework.upms.rpc.service.impl.UpmsRoleServiceImpl"/>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsRoleService" ref="upmsRoleService" timeout="10000"/>
 
     <!-- 权限 -->
     <bean id="upmsPermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsPermissionServiceImpl">
@@ -266,25 +286,30 @@
         <property name="upmsApiService"  ref="upmsApiService"/>
         <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsPermissionService" ref="upmsPermissionService" timeout="10000"/>
 
     <!-- 角色权限 -->
     <bean id="upmsRolePermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsRolePermissionServiceImpl">
         <property name="upmsRolePermissionMapper"  ref="upmsRolePermissionMapper"/>    
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsRolePermissionService" ref="upmsRolePermissionService" timeout="10000"/>
 
     <!-- 用户权限 -->
     <bean id="upmsUserPermissionService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserPermissionServiceImpl">
         <property name="upmsUserPermissionMapper"  ref="upmsUserPermissionMapper"/>    
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsUserPermissionService" ref="upmsUserPermissionService" timeout="10000"/>
 
     <!-- 用户角色 -->
     <bean id="upmsUserRoleService" class="com.magicube.framework.upms.rpc.service.impl.UpmsUserRoleServiceImpl">
         <property name="upmsUserRoleMapper"  ref="upmsUserRoleMapper"/>    
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsUserRoleService" ref="upmsUserRoleService" timeout="10000"/>
         
 
     <!-- 操作日志 -->
-    <bean id="upmsLogService" class="com.magicube.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
+    <bean id="upmsLogService" class="com.smg.framework.upms.rpc.service.impl.UpmsLogServiceImpl"/>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsLogService" ref="upmsLogService" timeout="10000"/>
     
     <!-- 接口服务 -->
     <bean id="upmsApiService" class="com.magicube.framework.upms.rpc.service.impl.UpmsApiServiceImpl">
@@ -296,6 +321,7 @@
         <property name="upmsOrganizationMapper"  ref="upmsOrganizationMapper"/>
         <property name="upmsLogMapper"  ref="upmsLogMapper"/>    
     </bean>
+    <dubbo:service interface="com.smg.framework.upms.rpc.api.UpmsApiService" ref="upmsApiService" timeout="10000"/>
     
     <!--   ##################     shiro配置结束    ################## -->
     <!--   ##################     ehcache配置开始    ################## -->
