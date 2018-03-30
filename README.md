@@ -1,0 +1,3 @@
+# magicube
+
+magicube框架
