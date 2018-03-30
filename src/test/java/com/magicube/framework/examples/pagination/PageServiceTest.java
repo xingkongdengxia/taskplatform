@@ -38,7 +38,7 @@ public class PageServiceTest {
     }
 
     /**
-     * Test of getActionSettingPage method, of class PageService.
+     * Test pagenation.
      */
     @Test
     public void testGetActionSettingPage() {
