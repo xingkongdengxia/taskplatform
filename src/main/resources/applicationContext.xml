@@ -362,6 +362,9 @@
         <property name="pageSize" value="5" />
     </bean>
     
+    <!-- 参数配置服务 -->
+    <bean id="paramConfigService" class="com.magicube.framework.config.rpc.service.impl.ParamConfigServiceImpl"/>
+    
     <!--   ##################     其他Bean配置结束    ################## -->
 
 </beans>
