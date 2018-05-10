@@ -63,3 +63,7 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 
+/target/
+/logs/
+/nbproject/
+velocity.log
