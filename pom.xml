@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.magicube</groupId>
-    <artifactId>framework</artifactId>
+    <artifactId>taskplatform</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>framework</name>
+    <name>taskplatform</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -255,7 +255,7 @@
     </dependencies>
 
     <build>
-        <finalName>framework</finalName>
+        <finalName>taskplatform</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -126,7 +126,7 @@ public class AESUtil {
             System.out.println(decryptString);
         }
 
-        String str = "framework0934";
+        String str = "taskplatform1758";
         String encodeStr = Base64.encodeToString(str.getBytes());
         System.out.println("encodeStr:" + encodeStr);
         String decodeStr = Base64.decodeToString(encodeStr);
