@@ -9,7 +9,6 @@
 <div class="fade_layer"></div>
 <div class="detail_layer select_peo workAdd">
     <div class="title fl">选择人员</div>
-    <c:out value="${username}" />
     <div class="fl serbox">
         <input type="text" class="searchUser" name="">
         <input type="button" class="searchBtn" value="搜索" name="">
@@ -21,10 +20,9 @@
                 <ul class="yiji">                    
                     <li class="areas_list_one"><a>信息系统组</a></li>
                     <ul class="areas_list_two">
-                        <li><span id="105">武华</span></li>
-                        <li><span id="106">李文</span></li>
-                        <li><span id="107">田俊</span></li>
-                        <li><span id="108">陈菲</span></li>
+                        <c:forEach var="user" items="${userList}">
+                            <li><span id="${user.username}">${user.realname}</span></li>
+                            </c:forEach>
                     </ul>                    
                 </ul>
             </div>

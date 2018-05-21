@@ -1,6 +1,6 @@
-$(function() {
+$(function () {
     //点击下拉人员效果
-    $('.detail_layer').find('.left .areas_list .areas_list_one > a').click(function() {
+    $('.detail_layer').find('.left .areas_list .areas_list_one > a').click(function () {
         if ($(this).parent().hasClass('on')) {
             $(this).parent().removeClass('on');
             $(this).parent().next('.areas_list_two').css('height', '0');
@@ -22,7 +22,7 @@ $(function() {
                 //显示子类
                 $(this).siblings('dl').show();
                 //子级分类点击事件
-                $(this).siblings('dl').children('dd').children('a').click(function() {
+                $(this).siblings('dl').children('dd').children('a').click(function () {
                     //解绑子级分类点击事件
                     $(this).siblings('dl').children('dd').children('a').unbind('click');
                     //切换隐藏
@@ -38,7 +38,7 @@ $(function() {
                         //如果还有下一级
                         if ($(this).siblings('dl').length > 0) {
                             $(this).siblings('dl').show().css('padding-left', '30px');
-                            $(this).siblings('dl').children('dd').children('a').click(function() {
+                            $(this).siblings('dl').children('dd').children('a').click(function () {
                                 //解绑子级分类点击事件
                                 $(this).siblings('dl').children('dd').children('a').unbind('click');
                                 if ($(this).hasClass('on')) {
@@ -52,7 +52,7 @@ $(function() {
                                     //如果还有下一级
                                     if ($(this).siblings('dl').length > 0) {
                                         $(this).siblings('dl').show().css('padding-left', '30px');
-                                        $(this).siblings('dl').children('dd').children('a').click(function() {
+                                        $(this).siblings('dl').children('dd').children('a').click(function () {
                                             console.log(1233);
                                             if ($(this).hasClass('on')) {
                                                 $(this).removeClass('on');
@@ -90,7 +90,7 @@ $(function() {
     });
 
     //插入元素
-    $('.detail_layer').find('.areas_list_two li').click(function() {
+    $('.detail_layer').find('.areas_list_two li').click(function () {
         //对勾切换效果
         if (!$(this).find('span').hasClass('hover')) {
             $(this).find('span').addClass('hover');
@@ -102,7 +102,7 @@ $(function() {
         $message_peo = $(this).html();
 
         //获取添加后的数组
-        var attrid = $(this).parents('.select_peo_con').find('.right ul.send_to li').map(function() {
+        var attrid = $(this).parents('.select_peo_con').find('.right ul.send_to li').map(function () {
             return $(this).find('span').attr('id');
         });
         //判断数字是否存在数组里
@@ -118,7 +118,7 @@ $(function() {
     });
 
     //取消按钮关闭事件
-    $('a.close_btn').click(function() {
+    $('a.close_btn').click(function () {
         $(this).parents('.detail_layer').fadeOut();
         //清空选择人员
         $('.detail_layer .right ul li').remove();
@@ -129,7 +129,7 @@ $(function() {
     });
 
     //搜索
-    $(".searchUser").keyup(function() {
+    $(".searchUser").keyup(function () {
         if (event.keyCode == 13) {
 
             var num = $('.workAdd .areas_list_two li span').filter(":contains('" + ($(this).val()) + "')").length;
@@ -142,42 +142,42 @@ $(function() {
                 //设置当前颜色
                 alert('为您找到' + num + '个相关项');
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .css('color', '#F00');
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .css('color', '#F00');
                 $('.workAdd .areas_list_two li span')
-                    .not(":contains('" + ($(this).val()) + "')")
-                    .css('color', '#666');
+                        .not(":contains('" + ($(this).val()) + "')")
+                        .css('color', '#666');
                 //设置直接父级上一兄弟元素显示
 
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('ul').prev('.areas_list_one').children('a').click();
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('ul').prev('.areas_list_one').children('a').click();
 
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('.areas_list_one').children('a').click();
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('.areas_list_one').children('a').click();
 
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('ul').siblings('dd').children('a').addClass('on');
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('ul').siblings('dd').children('a').addClass('on');
 
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('ul').css('height', 'auto');
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('ul').css('height', 'auto');
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('ul').prev('dd').children('a').addClass('on');
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('ul').prev('dd').children('a').addClass('on');
                 $('.workAdd .areas_list_two li span')
-                    .filter(":contains('" + ($(this).val()) + "')")
-                    .parents('dd').children('a').addClass('on');
+                        .filter(":contains('" + ($(this).val()) + "')")
+                        .parents('dd').children('a').addClass('on');
                 //设置中间级分类显示
                 $('.workAdd .areas_list_two li span').filter(":contains('" + ($(this).val()) + "')")
-                    .parents('dl').show();
+                        .parents('dl').show();
 
             }
         }
     })
-    $(".searchBtn").click(function() {
+    $(".searchBtn").click(function () {
 
         var num = $('.workAdd .areas_list_two li span').filter(":contains('" + ($(this).prev().val()) + "')").length;
 
@@ -189,37 +189,37 @@ $(function() {
             //设置当前颜色
             alert('为您找到' + num + '个相关项');
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .css('color', '#F00');
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .css('color', '#F00');
             $('.workAdd .areas_list_two li span')
-                .not(":contains('" + ($(this).prev().val()) + "')")
-                .css('color', '#666');
+                    .not(":contains('" + ($(this).prev().val()) + "')")
+                    .css('color', '#666');
             //设置直接父级上一兄弟元素显示
 
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('ul').prev('.areas_list_one').children('a').click();
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('ul').prev('.areas_list_one').children('a').click();
 
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('.areas_list_one').children('a').click();
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('.areas_list_one').children('a').click();
 
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('ul').siblings('dd').children('a').addClass('on');
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('ul').siblings('dd').children('a').addClass('on');
 
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('ul').css('height', 'auto');
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('ul').css('height', 'auto');
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('ul').prev('dd').children('a').addClass('on');
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('ul').prev('dd').children('a').addClass('on');
             $('.workAdd .areas_list_two li span')
-                .filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('dd').children('a').addClass('on');
+                    .filter(":contains('" + ($(this).prev().val()) + "')")
+                    .parents('dd').children('a').addClass('on');
             //设置中间级分类显示
             $('.workAdd .areas_list_two li span').filter(":contains('" + ($(this).prev().val()) + "')")
-                .parents('dl').show();
+                    .parents('dl').show();
         }
     })
 
@@ -237,11 +237,12 @@ function show_lay(id) {
 //选择人员插入当前点击的input里面
 function do_add(elm) {
     var id = $(elm).parents('div.detail_layer').attr('id');
+    //alert(id);
     var temp = '';
     var nruid = '';
     var temp1 = '';
     var eid = '';
-    $(elm).parents('#' + id).find('ul.send_to li').each(function(i, e) {
+    $(elm).parents('#' + id).find('ul.send_to li').each(function (i, e) {
         text = $(e).find('span');
         for (var i = 0; i < text.length; i++) {
             var val = $(text[i]).html();
@@ -252,10 +253,25 @@ function do_add(elm) {
             if (id != '') {
                 nruid += id + ',';
             }
-        };
+        }
+        ;
     });
 
     var temps = temp.substring(0, temp.length - 1);
+    //alert("temps:" + temps);
+    //判断是单选还是多选
+    var isSingle = id.indexOf("single");
+    //alert("isSingle:" + isSingle);
+    if (isSingle > 0) {  //如果是单选
+        var temps_index = temps.indexOf(",");   //找到逗号分隔的第一个字符串
+        temps = temps.substring(0, temps_index);
+        //alert("temps:" + temps);
+
+        var nruid_index = nruid.indexOf(",");
+        nruid = nruid.substring(0, nruid_index);
+        //alert("nruid:" + nruid);
+    }
+
     $('#area_btn_' + id).val(temps);
     $('#nruid_' + id).val(nruid);
     $('#eid').val(eid);
@@ -266,4 +282,5 @@ function do_add(elm) {
     $(elm).parents('.select_peo_con').find('.areas_list_one').removeClass('on');
     $(elm).parents('.select_peo_con').find('.areas_list_two li span').removeClass('hover');
     $('.fade_layer').fadeOut();
-};
+}
+;

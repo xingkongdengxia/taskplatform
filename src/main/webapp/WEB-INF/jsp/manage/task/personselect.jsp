@@ -21,14 +21,14 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="phone" id="area_btn_y2" onclick="show_lay(2)"  lay-verify="phone" autocomplete="off" class="layui-input">
                     <input id="nruid_y2" type="hidden" name="nruid_y2" value=""> 
-                    <em>查询人员2</em>
-                    <c:out value="${username}" />
+                    <em>查询人员2</em>                   
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="tel" id="area_btn_y1" onclick="show_lay(1)" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
-                    <em>查询人员1</em>
+                    <input type="tel" id="area_btn_ysingle1" onclick="show_lay('single1')" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
+                    <input id="nruid_ysingle1" type="hidden" name="nruid_ysingle1" value=""> 
+                    <em>查询人员1(单选)</em>
                 </div>
             </div>
         </form>
@@ -38,8 +38,8 @@
 
         <script>
             function displayUsername() {
-                alert(document.getElementById("nruid_y2").value);
-
+                alert("area_btn_y2:" + document.getElementById("nruid_y2").value);
+                alert("area_btn_ysingle1:" + document.getElementById("nruid_ysingle1").value);
             }
         </script>
     </body>
