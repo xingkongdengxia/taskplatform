@@ -15,7 +15,7 @@ public class TaskConstant extends BaseConstants {
 
     //任务类型
     public static final Byte TASK_TYPE_SYSMAINTENANCE = 0;   //系统运维
-    public static final Byte TASK_TYPE_SYSUPGRADE = 1;   //系统运维
+    public static final Byte TASK_TYPE_SYSUPGRADE = 1;   //系统升级
     public static final Byte TASK_TYPE_EMERGENCY = 2;   //应急演练
     public static final Byte TASK_TYPE_OTHER = 3;   //其他
 
