@@ -59,13 +59,36 @@
                 <option value="2">应急演练</option>
                 <option value="3">其他</option>
             </select>     
-             任务类型：
-            <select id="task_type" name="task_type" class="form-control">                
-                <option value="0">系统运维</option>
-                <option value="1">系统升级</option>
-                <option value="2">应急演练</option>
-                <option value="3">其他</option>
+            <br>
+            任务来源：
+            <select id="task_source" name="task_source" class="form-control">                
+                <option value="0">自建任务</option>
+                <option value="1">源自OA系统的任务</option>                
             </select>   
+            <br>
+            优先级：
+            <select id="priority" name="priority" class="form-control">                
+                <option value="0">低</option>
+                <option value="1">中</option>
+                <option value="2">高</option>        
+            </select>
+            <br>
+            任务状态：
+            <select id="task_status" name="task_status" class="form-control">                
+                <option value="0">进行中</option>
+                <option value="1">已完成</option>
+                <option value="2">已暂停</option>
+                <option value="3">已作废</option>
+                <option value="4">已关闭</option>
+            </select>
+            <br>
+            汇报周期：
+            <select id="task_status" name="task_status" class="form-control">                
+                <option value="0">每天</option>
+                <option value="1">每3天</option>
+                <option value="2">每周</option>
+                <option value="3">每月</option>
+            </select>
         </div>
         <c:import url="/resources/inc/footer.jsp" />
         <script>
