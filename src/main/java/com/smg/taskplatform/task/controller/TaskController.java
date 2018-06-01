@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,6 +38,18 @@ public class TaskController extends BaseController {
         modelMap.put("userList", userList);
 
         return "/manage/task/personselect.jsp";
+    }
+
+    @ApiOperation(value = "新建任务")
+    @RequiresPermissions("tp:task:add")
+    @RequestMapping(value = "/addtask", method = RequestMethod.GET)
+    public String addtask(ModelMap modelMap) {
+
+        //人员选择框数据
+        List<UpmsUser> userList = userService.getAllUsersExceptAdmin();
+        modelMap.put("userList", userList);
+
+        return "/manage/task/addtask.jsp";
     }
 
 }

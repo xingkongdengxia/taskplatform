@@ -264,12 +264,13 @@ function do_add(elm) {
     //alert("isSingle:" + isSingle);
     if (isSingle > 0) {  //如果是单选
         var temps_index = temps.indexOf(",");   //找到逗号分隔的第一个字符串
-        temps = temps.substring(0, temps_index);
-        //alert("temps:" + temps);
+        if (temps_index > 0) {
+            temps = temps.substring(0, temps_index);
+            //alert("temps:" + temps);
 
-        var nruid_index = nruid.indexOf(",");
-        nruid = nruid.substring(0, nruid_index);
-        //alert("nruid:" + nruid);
+            var nruid_index = nruid.indexOf(",");
+            nruid = nruid.substring(0, nruid_index);
+        }
     }
 
     $('#area_btn_' + id).val(temps);
