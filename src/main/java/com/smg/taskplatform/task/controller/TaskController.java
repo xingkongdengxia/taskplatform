@@ -1,7 +1,10 @@
 package com.smg.taskplatform.task.controller;
 
 import com.magicube.framework.common.base.BaseController;
+import com.magicube.framework.common.constant.UpmsResult;
+import com.magicube.framework.common.constant.UpmsResultConstant;
 import com.magicube.framework.upms.dao.model.UpmsUser;
+import com.smg.taskplatform.task.dao.model.TpTaskChild;
 import com.smg.taskplatform.task.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 任务controller
@@ -50,6 +55,44 @@ public class TaskController extends BaseController {
         modelMap.put("userList", userList);
 
         return "/manage/task/addtask.jsp";
+    }
+
+    @ApiOperation(value = "新建任务")
+    @RequiresPermissions("tp:task:add")
+    @ResponseBody
+    @RequestMapping(value = "/addtask", method = RequestMethod.POST)
+    public Object create(TpTaskChild taskchild) {
+        log.debug("taskType:" + taskchild.getTaskType());
+        log.debug("priority:" + taskchild.getPriority());
+        log.debug("responsibleman:" + taskchild.getResponsibleman());
+        log.debug("executor:" + taskchild.getExecutor());
+        log.debug("cc:" + taskchild.getCc());
+        log.debug("title:" + taskchild.getTitle());
+        log.debug("description:" + taskchild.getDescription());
+        log.debug("showStarttime:" + taskchild.getShowStarttime().toString());
+        log.debug("starttime:" + taskchild.getStarttime());
+        log.debug("showEndtime:" + taskchild.getShowEndtime().toString());
+        log.debug("endtime:" + taskchild.getEndtime());
+
+        return new UpmsResult(UpmsResultConstant.SUCCESS, 1);
+    }
+
+    /**
+     * 转入结果页面
+     *
+     * @param message 显示信息
+     * @param modelMap
+     * @return
+     */
+    @ApiOperation(value = "结果页面")
+    @RequestMapping(value = "/result", method = RequestMethod.GET)
+    public String result(
+            @RequestParam(required = true, defaultValue = "", value = "message") String message,
+            ModelMap modelMap) {
+
+        modelMap.put("message", message);
+
+        return "result.jsp";
     }
 
 }

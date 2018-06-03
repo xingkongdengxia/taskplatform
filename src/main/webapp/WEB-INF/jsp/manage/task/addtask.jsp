@@ -18,23 +18,14 @@
     <body>
         <div id='wrap'>
             <div class='content_wrap'>
-                <div class='panel panel-default'>
-                    <div id='titlebar'>
-                        <div class='heading'>
-                            <span class='prefix'><i class='icon-check-sign'></i></span>
-                            <strong><small class='text-muted'><i class='icon-plus'></i></small></strong>
-                        </div>
-                        <div class='actions'>
-                            <button type="button" class="btn btn-default" data-toggle="customModal"><i class='icon icon-cog'></i> </button>
-                        </div>
-                    </div>
-                    <form class='form-condensed' method='post' enctype='multipart/form-data' id='dataform' data-type='ajax'>                    
+                <div class='panel panel-default'>                   
+                    <form class='form-condensed' method='post' id='addtaskform'>                    
                         <table class='table table-form'>                             
                             <tr>
                                 <th>任务类型</th>
                                 <td><div class="row">
                                         <div class="col-xs-3">
-                                            <select id="task_type" name="task_type" class="form-control">                
+                                            <select id="task_type" name="taskType" class="form-control">                
                                                 <option value="0">系统运维</option>
                                                 <option value="1">系统升级</option>
                                                 <option value="2">应急演练</option>
@@ -117,64 +108,39 @@
                                         </div>                                                                            
                                     </div>
                                 </td>
-                            </tr>                
+                            </tr>   
                             <tr>
-                                <th>日程规划</th>
-                                <td id='planAndMailCell' colspan='5' class='has-mail-col'>
-                                    <div class='row-table'>
-                                        <div class='col-table' id='taskPlanCol'>
-                                            <div class='input-group' id='dataPlanGroup'>                              
-                                                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_starttime" data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value="" readonly>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_starttime" value="" /><br/>
-                                                &nbsp;&nbsp;&nbsp;
-                                                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_endtime" data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value="" readonly>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_starttime" value="" /><br/>
-                                            </div>
-                                        </div>                                 
+                                <th>开始日期</th>
+                                <td><div class="row">
+                                        <div class="col-xs-3 input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_starttime" data-link-format="yyyy-mm-dd"">                                           
+                                            <input class="form-control" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            <input type="hidden" id="dtp_starttime" value="" class="form-control" name='showStarttime'/><br/>
+                                        </div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3"></div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>附件 </th>
-                                <td colspan='5'><style>
-                                        .fileBox {margin-bottom: 10px; width: 100%}
-                                        table.fileBox td {padding: 0!important}
-                                        .fileBox .input-control > input[type='file'] {width: 100%; height: 100%; height: 26px; line-height: 26px; border: none; position: relative;}
-                                        .fileBox td .btn {border-radius: 0; border-left: none}
-                                        .file-wrapper.form-control {border-right: 0}
-                                        .file-wrapper.form-control .fileControl {width:100%;}
-                                        @-moz-document url-prefix(){.file-wrapper.form-control .fileControl {margin-top:-3px;}}
-                                    </style>
-                                    <div id='fileform'>
-                                        <script language='Javascript'>dangerFiles = "php,php3,php4,phtml,php5,jsp,py,rb,asp,aspx,ashx,asa,cer,cdx,aspl,shtm,shtml,html,htm";</script>
-                                        <table class='fileBox' id='fileBox1'>
-                                            <tr>
-                                                <td class='w-p45'><div class='form-control file-wrapper'><input type='file' name='files[]' class='fileControl'  tabindex='-1' onchange='checkSizeAndType(this)'/></div></td>
-                                                <td class=''><input type='text' name='labels[]' class='form-control' placeholder='标题：' tabindex='-1' /></td>
-                                                <td class='w-30px'><a href='javascript:void(0);' onclick='addFile(this)' class='btn btn-block'><i class='icon-plus'></i></a></td>
-                                                <td class='w-30px'><a href='javascript:void(0);' onclick='delFile(this)' class='btn btn-block'><i class='icon-remove'></i></a></td>
-                                            </tr>
-                                        </table></div>                               
+                                <th>截止日期</th>
+                                <td><div class="row">
+                                        <div class="col-xs-3 input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_endtime" data-link-format="yyyy-mm-dd"">                                           
+                                            <input class="form-control" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            <input type="hidden" id="dtp_endtime" value="" class="form-control" name='showEndtime'/><br/>
+                                        </div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3"></div>
+                                    </div>
                                 </td>
-                            </tr>
-                            <tr >
-                                <th>添加之后</th>
-                                <td colspan='5'><label class='radio-inline'><input type='radio' name='after' value='continueAdding'  checked ='checked' id='aftercontinueAdding' /> 继续为该需求添加任务</label><label class='radio-inline'><input type='radio' name='after' value='toTaskList'  id='aftertoTaskList' /> 返回任务列表</label><label class='radio-inline'><input type='radio' name='after' value='toStoryList'  id='aftertoStoryList' /> 返回需求列表</label></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td colspan='5'> <button type='submit' id='submit' class='btn btn-primary'  data-loading='稍候...'>保存</button><a href='javascript:history.go(-1);' class='btn btn-back ' >返回</a></td>
-                            </tr>
-                        </table>
-                        <span id='responser'></span>
+                            </tr>                                             
+                        </table> 
+                        <center><button type="button" class="btn btn-primary" onclick="javascript:addtask();">保存</button></center>
                     </form>
                 </div>
             </div>                
@@ -182,7 +148,79 @@
         <c:import url="/resources/inc/personselect.jsp" />
         <c:import url="/resources/inc/footer.jsp" />
         <script>
+            $('.form_date').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
+            });
 
+            function addtask() {
+                $.ajax({
+                    type: 'post',
+                    url: '${basePath}/manage/task/addtask',
+                    data: $('#addtaskform').serialize(),
+                    beforeSend: function () {
+                    },
+                    success: function (result) {
+                        if (result.code != 1) {
+                            if (result.data instanceof Array) {
+                                $.each(result.data, function (index, value) {
+                                    $.confirm({
+                                        theme: 'dark',
+                                        animation: 'rotateX',
+                                        closeAnimation: 'rotateX',
+                                        title: false,
+                                        content: value.errorMsg,
+                                        buttons: {
+                                            confirm: {
+                                                text: '确认',
+                                                btnClass: 'waves-effect waves-button waves-light'
+                                            }
+                                        }
+                                    });
+                                });
+                            } else {
+                                $.confirm({
+                                    theme: 'dark',
+                                    animation: 'rotateX',
+                                    closeAnimation: 'rotateX',
+                                    title: false,
+                                    content: result.data.errorMsg || result.data,
+                                    buttons: {
+                                        confirm: {
+                                            text: '确认',
+                                            btnClass: 'waves-effect waves-button waves-light'
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            //alert("保存成功！");
+                            window.location.href = "${basePath}/page/result?message=sss";
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $.confirm({
+                            theme: 'dark',
+                            animation: 'rotateX',
+                            closeAnimation: 'rotateX',
+                            title: false,
+                            content: textStatus,
+                            buttons: {
+                                confirm: {
+                                    text: '确认',
+                                    btnClass: 'waves-effect waves-button waves-light'
+                                }
+                            }
+                        });
+                    }
+                });
+            }
         </script>
     </body>
 </html>
