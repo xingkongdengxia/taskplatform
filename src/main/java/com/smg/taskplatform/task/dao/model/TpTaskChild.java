@@ -1,9 +1,10 @@
 package com.smg.taskplatform.task.dao.model;
 
+import com.magicube.framework.common.utils.DateFormatUtil;
 import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -16,32 +17,35 @@ public class TpTaskChild extends TpTask {
     /**
      * 开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date showStarttime;
+    private String showStarttime;
 
     /**
      * 截止时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date showEndtime;
+    private String showEndtime;
 
-    public Date getShowStarttime() {
+    public String getShowStarttime() {
         return showStarttime;
     }
 
-    public void setShowStarttime(Date showStarttime) {
+    public void setShowStarttime(String showStarttime) {
         this.showStarttime = showStarttime;
-        //设置毫秒数
-        setStarttime(showStarttime.getTime());
+        if (!StringUtils.isEmpty(showStarttime)) {
+            Date date = DateFormatUtil.getDateByStringDate(showStarttime);
+            setStarttime(date.getTime());
+        }
     }
 
-    public Date getShowEndtime() {
+    public String getShowEndtime() {
         return showEndtime;
     }
 
-    public void setShowEndtime(Date showEndtime) {
+    public void setShowEndtime(String showEndtime) {
         this.showEndtime = showEndtime;
-        setEndtime(showEndtime.getTime());
+        if (!StringUtils.isEmpty(showEndtime)) {
+            Date date = DateFormatUtil.getDateByStringDate(showEndtime);
+            setStarttime(date.getTime());
+        }
     }
 
     @Override

@@ -69,9 +69,9 @@ public class TaskController extends BaseController {
         log.debug("cc:" + taskchild.getCc());
         log.debug("title:" + taskchild.getTitle());
         log.debug("description:" + taskchild.getDescription());
-        log.debug("showStarttime:" + taskchild.getShowStarttime().toString());
+        log.debug("showStarttime:" + taskchild.getShowStarttime());
         log.debug("starttime:" + taskchild.getStarttime());
-        log.debug("showEndtime:" + taskchild.getShowEndtime().toString());
+        log.debug("showEndtime:" + taskchild.getShowEndtime());
         log.debug("endtime:" + taskchild.getEndtime());
 
         return new UpmsResult(UpmsResultConstant.SUCCESS, 1);
@@ -92,7 +92,7 @@ public class TaskController extends BaseController {
 
         modelMap.put("message", message);
 
-        return "result.jsp";
+        return "/manage/task/result.jsp";
     }
 
 }

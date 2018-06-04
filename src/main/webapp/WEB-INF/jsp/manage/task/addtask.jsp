@@ -201,7 +201,7 @@
                             }
                         } else {
                             //alert("保存成功！");
-                            window.location.href = "${basePath}/page/result?message=sss";
+                            window.location.href = "${basePath}/manage/task/result?message=保存成功！";
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
