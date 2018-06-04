@@ -57,7 +57,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>责任人</th>
+                                <th>责任人<span style="color:red">*</span></th>
                                 <td><div class="row">
                                         <div class="col-xs-3">                                           
                                             <input type='text' name='showresponsibleman' id='area_btn_ysingle-responsibleman' value='' onclick="show_lay('single-responsibleman')" class='form-control' autocomplete='off' />                                           
@@ -92,7 +92,7 @@
                                 </td>
                             </tr> 
                             <tr>
-                                <th>任务名称</th>
+                                <th>任务名称<span style="color:red">*</span></th>
                                 <td><div class="row">
                                         <div class="col-xs-12">                                           
                                             <input type='text' name='title' id='title' value='' class='form-control' autocomplete='off' />
@@ -165,6 +165,16 @@
                     url: '${basePath}/manage/task/addtask',
                     data: $('#addtaskform').serialize(),
                     beforeSend: function () {
+                        if ($('#nruid_ysingle-responsibleman').val() == '') {
+                            $('#nruid_ysingle-responsibleman').focus();
+                            alert("责任人不能为空！")
+                            return false;
+                        }
+                        if ($('#title').val() == '') {
+                            $('#title').focus();
+                            alert("任务名称不能为空！")
+                            return false;
+                        }
                     },
                     success: function (result) {
                         if (result.code != 1) {

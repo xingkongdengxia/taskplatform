@@ -1,5 +1,6 @@
 package com.smg.taskplatform.task.service;
 
+import com.smg.taskplatform.task.operator.UserOperator;
 import com.magicube.framework.common.SpringUtil;
 import com.magicube.framework.upms.dao.model.UpmsUser;
 import com.magicube.framework.upms.rpc.api.UpmsUserService;
@@ -26,7 +27,7 @@ public class UserServiceTest {
     }
 
     /**
-     * Test of setUpmsUserService method, of class UserService.
+     * Test of setUpmsUserService method, of class UserOperator.
      */
     @Test
     public void testSetUpmsUserService() {
@@ -35,12 +36,12 @@ public class UserServiceTest {
     }
 
     /**
-     * Test of getAllUsersExceptAdmin method, of class UserService.
+     * Test of getAllUsersExceptAdmin method, of class UserOperator.
      */
     @Test
     public void testGetAllUsersExceptAdmin() {
         System.out.println("getAllUsersExceptAdmin");
-        UserService instance = new UserService();
+        UserOperator instance = new UserOperator();
         UpmsUserService upmsUserService = (UpmsUserService) SpringUtil.getBean("upmsUserService");
         instance.setUpmsUserService(upmsUserService);
 

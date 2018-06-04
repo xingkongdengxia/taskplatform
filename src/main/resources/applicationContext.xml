@@ -346,8 +346,11 @@
     <!-- 参数配置服务 -->
     <bean id="paramConfigService" class="com.magicube.framework.config.rpc.service.impl.ParamConfigServiceImpl"/>
     
+    <!-- 任务服务 -->
+    <bean id="tpTaskService" class="com.smg.taskplatform.task.rpc.service.impl.TpTaskServiceImpl"/>
+    
     <!-- 用户操作服务 -->
-    <bean id="userService" class="com.smg.taskplatform.task.service.UserService">
+    <bean id="userOperator" class="com.smg.taskplatform.task.operator.UserOperator">
         <property name="upmsUserService">
             <ref bean="upmsUserService" />
         </property>

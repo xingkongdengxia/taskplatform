@@ -1,17 +1,26 @@
 package com.smg.taskplatform.task.controller;
 
+import com.baidu.unbiz.fluentvalidator.ComplexResult;
+import com.baidu.unbiz.fluentvalidator.FluentValidator;
+import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.magicube.framework.common.base.BaseController;
 import com.magicube.framework.common.constant.UpmsResult;
 import com.magicube.framework.common.constant.UpmsResultConstant;
+import com.magicube.framework.common.validator.NotBlankValidator;
 import com.magicube.framework.upms.dao.model.UpmsUser;
+import com.smg.taskplatform.task.constant.TaskConstant;
+import com.smg.taskplatform.task.dao.model.TpTask;
 import com.smg.taskplatform.task.dao.model.TpTaskChild;
-import com.smg.taskplatform.task.service.UserService;
+import com.smg.taskplatform.task.operator.UserOperator;
+import com.smg.taskplatform.task.rpc.api.TpTaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,13 +42,16 @@ public class TaskController extends BaseController {
     private static final Log log = LogFactory.getLog(TaskController.class);
 
     @Autowired
-    private UserService userService;
+    private UserOperator userOperator;
+
+    @Autowired
+    private TpTaskService tpTaskService;
 
     @ApiOperation(value = "选择联系人")
     @RequestMapping(value = "/personselect", method = RequestMethod.GET)
     public String personselect(ModelMap modelMap) {
 
-        List<UpmsUser> userList = userService.getAllUsersExceptAdmin();
+        List<UpmsUser> userList = userOperator.getAllUsersExceptAdmin();
         modelMap.put("userList", userList);
 
         return "/manage/task/personselect.jsp";
@@ -51,7 +63,7 @@ public class TaskController extends BaseController {
     public String addtask(ModelMap modelMap) {
 
         //人员选择框数据
-        List<UpmsUser> userList = userService.getAllUsersExceptAdmin();
+        List<UpmsUser> userList = userOperator.getAllUsersExceptAdmin();
         modelMap.put("userList", userList);
 
         return "/manage/task/addtask.jsp";
@@ -74,7 +86,41 @@ public class TaskController extends BaseController {
         log.debug("showEndtime:" + taskchild.getShowEndtime());
         log.debug("endtime:" + taskchild.getEndtime());
 
-        return new UpmsResult(UpmsResultConstant.SUCCESS, 1);
+        ComplexResult result = FluentValidator.checkAll()
+                .on(taskchild.getResponsibleman(), new NotBlankValidator("责任人"))
+                .on(taskchild.getTitle(), new NotBlankValidator("任务名称"))
+                .doValidate()
+                .result(ResultCollectors.toComplex());
+        if (!result.isSuccess()) {
+            return new UpmsResult(UpmsResultConstant.FAILED, result.getErrors());
+        }
+
+        //得到当前登录用户
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getPrincipal();
+
+        TpTask task = new TpTask();
+        task.setTitle(taskchild.getTitle());
+        task.setDescription(taskchild.getDescription());
+        task.setInitiator(username);    //发起人
+        task.setResponsibleman(taskchild.getResponsibleman());
+        task.setExecutor(taskchild.getExecutor());
+        task.setCc(taskchild.getCc());
+        task.setTaskType(taskchild.getTaskType());
+        task.setTaskSource(TaskConstant.TASK_SOURCE_SELF);  //自建任务
+        task.setPriority(taskchild.getPriority());
+        task.setStarttime(taskchild.getStarttime());
+        task.setEndtime(taskchild.getEndtime());
+        task.setTaskStatus(TaskConstant.TASK_STATUS_INPROGRESS);    //任务状态：进行中
+
+        int isSuccess = tpTaskService.insertSelective(task);
+        log.info("isSuccess:" + isSuccess);
+        if (isSuccess > 0) {
+            return new UpmsResult(UpmsResultConstant.SUCCESS, 1);
+        } else {
+            return new UpmsResult(UpmsResultConstant.FAILED, "保存失败！");
+        }
+
     }
 
     /**

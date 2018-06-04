@@ -1,4 +1,4 @@
-package com.smg.taskplatform.task.service;
+package com.smg.taskplatform.task.operator;
 
 import com.magicube.framework.upms.dao.model.UpmsUser;
 import com.magicube.framework.upms.dao.model.UpmsUserExample;
@@ -14,9 +14,9 @@ import org.springframework.util.ObjectUtils;
  *
  * @author justincai
  */
-public class UserService {
+public class UserOperator {
 
-    private static final Log log = LogFactory.getLog(UserService.class);
+    private static final Log log = LogFactory.getLog(UserOperator.class);
 
     @Autowired
     private UpmsUserService upmsUserService;
