@@ -356,6 +356,10 @@
         </property>
     </bean>
     
+    <!-- 任务操作服务 -->
+    <bean id="taskOperator" class="com.smg.taskplatform.task.operator.TaskOperator" />
+        
+    
     <!--   ##################     其他Bean配置结束    ################## -->
 
 </beans>

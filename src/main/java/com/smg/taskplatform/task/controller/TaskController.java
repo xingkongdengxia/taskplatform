@@ -6,11 +6,13 @@ import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.magicube.framework.common.base.BaseController;
 import com.magicube.framework.common.constant.UpmsResult;
 import com.magicube.framework.common.constant.UpmsResultConstant;
+import com.magicube.framework.common.validator.LengthValidator;
 import com.magicube.framework.common.validator.NotBlankValidator;
 import com.magicube.framework.upms.dao.model.UpmsUser;
 import com.smg.taskplatform.task.constant.TaskConstant;
 import com.smg.taskplatform.task.dao.model.TpTask;
 import com.smg.taskplatform.task.dao.model.TpTaskChild;
+import com.smg.taskplatform.task.operator.TaskOperator;
 import com.smg.taskplatform.task.operator.UserOperator;
 import com.smg.taskplatform.task.rpc.api.TpTaskService;
 import io.swagger.annotations.Api;
@@ -24,6 +26,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +46,9 @@ public class TaskController extends BaseController {
 
     @Autowired
     private UserOperator userOperator;
+
+    @Autowired
+    private TaskOperator taskOperator;
 
     @Autowired
     private TpTaskService tpTaskService;
@@ -86,13 +92,26 @@ public class TaskController extends BaseController {
         log.debug("showEndtime:" + taskchild.getShowEndtime());
         log.debug("endtime:" + taskchild.getEndtime());
 
+        //检查必填项
         ComplexResult result = FluentValidator.checkAll()
                 .on(taskchild.getResponsibleman(), new NotBlankValidator("责任人"))
-                .on(taskchild.getTitle(), new NotBlankValidator("任务名称"))
+                .on(taskchild.getTitle(), new LengthValidator(1, 1000, "任务名称"))
                 .doValidate()
                 .result(ResultCollectors.toComplex());
         if (!result.isSuccess()) {
             return new UpmsResult(UpmsResultConstant.FAILED, result.getErrors());
+        }
+
+        //检查各字段长度
+        result = taskOperator.checkFieldLength(taskchild);
+        if (!ObjectUtils.isEmpty(result) && !result.isSuccess()) {
+            return new UpmsResult(UpmsResultConstant.INVALID_LENGTH, result.getErrors());
+        }
+
+        //检查开始日期与截止日期的合理性（截止日期不能早于开始日期）
+        boolean startTimeBeforeEndTime = taskOperator.checkStartAndEndTime(taskchild);
+        if (!startTimeBeforeEndTime) {
+            return new UpmsResult(UpmsResultConstant.FAILED, "截止日期不能早于开始日期!");
         }
 
         //得到当前登录用户

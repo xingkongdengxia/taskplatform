@@ -44,7 +44,7 @@ public class TpTaskChild extends TpTask {
         this.showEndtime = showEndtime;
         if (!StringUtils.isEmpty(showEndtime)) {
             Date date = DateFormatUtil.getDateByStringDate(showEndtime);
-            setStarttime(date.getTime());
+            setEndtime(date.getTime());
         }
     }
 
