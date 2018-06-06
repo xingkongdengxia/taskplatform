@@ -46,4 +46,26 @@ public class UserOperator {
         }
     }
 
+    /**
+     * 根据用户名得到真实姓名
+     *
+     * @param username
+     * @return
+     */
+    public String getRealnameByUsername(String username) {
+
+        UpmsUserExample upmsUserExample = new UpmsUserExample();
+        upmsUserExample.or()
+                .andUsernameEqualTo(username);
+        UpmsUser upmsUser = upmsUserService.selectFirstByExample(upmsUserExample);
+        if (!ObjectUtils.isEmpty(upmsUser)) {
+            log.info("the usename(" + upmsUser.getUsername() + ")'s realname is " + upmsUser.getRealname());
+            return upmsUser.getRealname();
+        } else {
+            log.info("can't find the user by the username(" + upmsUser.getUsername() + ")");
+            return null;
+        }
+
+    }
+
 }

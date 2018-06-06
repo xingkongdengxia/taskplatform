@@ -17,6 +17,4 @@
 <link href="<c:url value="/resources/admin/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" />" rel="stylesheet"/>
 <link href="<c:url value="/resources/admin/plugins/webuploader-0.1.5/webuploader.css" />" rel="stylesheet"/>
 <link href="<c:url value="/resources/admin/css/common.css" />" rel="stylesheet"/>
-<link href="<c:url value="/resources/admin/plugins/personselect/css/common.css" />" rel="stylesheet"/>
-<link href="<c:url value="/resources/admin/plugins/personselect/css/select.css" />" rel="stylesheet"/>
 <link href="<c:url value="/resources/admin/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />" rel="stylesheet"/>

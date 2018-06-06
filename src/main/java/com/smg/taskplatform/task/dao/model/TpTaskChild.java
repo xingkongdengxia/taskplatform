@@ -1,10 +1,12 @@
 package com.smg.taskplatform.task.dao.model;
 
 import com.magicube.framework.common.utils.DateFormatUtil;
+import com.smg.taskplatform.task.operator.UserOperator;
 import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -13,6 +15,9 @@ import org.apache.commons.logging.LogFactory;
 public class TpTaskChild extends TpTask {
 
     private static final Log log = LogFactory.getLog(TpTaskChild.class);
+
+    @Autowired
+    private UserOperator userOperator;
 
     /**
      * 开始时间
@@ -23,6 +28,22 @@ public class TpTaskChild extends TpTask {
      * 截止时间
      */
     private String showEndtime;
+
+    /**
+     * 发起人姓名
+     */
+    private String initiatorRealname;
+
+    public String getInitiatorRealname() {
+        if (StringUtils.isEmpty(initiatorRealname)) {
+            initiatorRealname = userOperator.getRealnameByUsername(getInitiator());
+        }
+        return initiatorRealname;
+    }
+
+    public void setInitiatorRealname(String initiatorRealname) {
+        this.initiatorRealname = initiatorRealname;
+    }
 
     public String getShowStarttime() {
         return showStarttime;

@@ -6,6 +6,7 @@ import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.magicube.framework.common.base.BaseController;
 import com.magicube.framework.common.constant.UpmsResult;
 import com.magicube.framework.common.constant.UpmsResultConstant;
+import com.magicube.framework.common.utils.FatherToChildUtil;
 import com.magicube.framework.common.validator.LengthValidator;
 import com.magicube.framework.common.validator.NotBlankValidator;
 import com.magicube.framework.upms.dao.model.UpmsUser;
@@ -18,6 +19,8 @@ import com.smg.taskplatform.task.operator.UserOperator;
 import com.smg.taskplatform.task.rpc.api.TpTaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,7 +185,7 @@ public class TaskController extends BaseController {
             @RequestParam(required = false, defaultValue = "", value = "search") String search,
             @RequestParam(required = false, value = "sort") String sort,
             @RequestParam(required = false, value = "order") String order,
-            HttpServletRequest request) {
+            HttpServletRequest request) throws InvocationTargetException {
 
         //得到当前登录用户
         Subject subject = SecurityUtils.getSubject();
@@ -197,30 +200,36 @@ public class TaskController extends BaseController {
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andResponsiblemanLike(username)
-                    .andExecutorLike(username)
+                    .andResponsiblemanLike("%" + username + "%")
                     .andTitleLike("%" + search + "%");      //任务名称
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andResponsiblemanLike(username)
-                    .andExecutorLike(username)
-                    .andDescriptionLike("%" + search + "%");   //任务描述   
+                    .andExecutorLike("%" + username + "%")
+                    .andTitleLike("%" + search + "%");      //任务名称
+
             if (StringUtils.isNumeric(search)) {     //任务编号
                 log.info("search str is a number!");
                 tpTaskExample.or()
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                        .andResponsiblemanLike(username)
-                        .andExecutorLike(username)
-                        .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号  
+                        .andResponsiblemanLike("%" + username + "%")
+                        .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
+                tpTaskExample.or()
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                        .andExecutorLike("%" + username + "%")
+                        .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
             }
         } else {
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andResponsiblemanLike(username)
-                    .andExecutorLike(username);
+                    .andResponsiblemanLike("%" + username + "%");
+            tpTaskExample.or()
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                    .andExecutorLike("%" + username + "%");
         }
 
         //排序条件
@@ -228,8 +237,19 @@ public class TaskController extends BaseController {
             tpTaskExample.setOrderByClause(sort + " " + order);
         }
 
-        List<TpTask> rows = tpTaskService.selectByExampleForOffsetPage(tpTaskExample, offset, limit);
-        long total = tpTaskService.countByExample(tpTaskExample);
+        List<TpTask> tpTaskrows = tpTaskService.selectByExampleForOffsetPage(tpTaskExample, offset, limit);
+
+        //TpTask类转换为TpTaskChild,便于数据转换
+        List<TpTaskChild> rows = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(tpTaskrows)) {
+            for (TpTask tpTask : tpTaskrows) {
+                TpTaskChild tpTaskChild = new TpTaskChild();
+                FatherToChildUtil.fatherToChild(tpTask, tpTaskChild);
+                rows.add(tpTaskChild);
+            }
+        }
+
+        long total = rows.size();
 
         Map<String, Object> result = new HashMap<>();
         result.put("rows", rows);

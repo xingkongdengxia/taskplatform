@@ -14,6 +14,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>新建任务</title>
         <c:import url="/resources/inc/head.jsp" />
+        <link href="<c:url value="/resources/admin/plugins/personselect/css/common.css" />" rel="stylesheet"/>
+        <link href="<c:url value="/resources/admin/plugins/personselect/css/select.css" />" rel="stylesheet"/>
     </head>
     <body>
         <div id='wrap'>
@@ -147,6 +149,7 @@
         </div>
         <c:import url="/resources/inc/personselect.jsp" />
         <c:import url="/resources/inc/footer.jsp" />
+        <script src="<c:url value="/resources/admin/plugins/personselect/js/select.js" />"></script>
         <script>
             $('.form_date').datetimepicker({
                 language: 'zh-CN',

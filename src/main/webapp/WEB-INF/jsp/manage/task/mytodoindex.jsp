@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
@@ -13,7 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>我的待办</title>
-        <c:import url="/resources/inc/head.jsp" />
+        <c:import url="/resources/inc/head.jsp" /> 
     </head>
     <body>
         <div id="main">
@@ -49,6 +50,7 @@
                     idField: 'taskId',
                     maintainSelected: true,
                     toolbar: '#toolbar',
+                    queryParamsType: "undefined",
                     queryParams: function (params) {
                         var str_search = $('#txt_search_key').val();
                         return {
@@ -60,10 +62,18 @@
                     columns: [
                         {field: 'ck', checkbox: true},
                         {field: 'taskId', title: '编号', sortable: true, align: 'center'},
-                        
+                        {field: 'title', title: '任务名称'},
+                        {field: 'initiatorRealname', title: '发起人'},
+                        {field: 'responsibleman', title: '责任人'},
+                        {field: 'executor', title: '执行人'},
+                        {field: 'taskSource', title: '任务来源'},
+                        {field: 'taskType', title: '任务类型'},
+                        {field: 'taskStatus', title: '任务状态'},
+                        {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
                     ]
                 });
-            });
+            }
+            );
             // 格式化操作按钮
             function actionFormatter(value, row, index) {
                 return [
@@ -84,7 +94,7 @@
             }
 
             //初始化搜索框
-            $('#txt_search_key_placeholder').text("任务编号、任务名称、任务描述");
+            $('#txt_search_key_placeholder').text("任务编号、任务名称");
         </script>
     </body>
 </html>

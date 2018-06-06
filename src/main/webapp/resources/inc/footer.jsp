@@ -17,6 +17,5 @@
 <script src="<c:url value="/resources/admin/plugins/zTree_v3/js/jquery.ztree.all.min.js" />"></script>
 <script src="<c:url value="/resources/admin/plugins/webuploader-0.1.5/webuploader.min.js" />"></script>
 <script src="<c:url value="/resources/admin/js/common.js" />"></script>
-<script src="<c:url value="/resources/admin/plugins/personselect/js/select.js" />"></script>
 <script src="<c:url value="/resources/admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" />"></script>
 <script src="<c:url value="/resources/admin/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" />"></script>
