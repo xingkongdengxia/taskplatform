@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TpTaskChild extends TpTask {
 
     private static final Log log = LogFactory.getLog(TpTaskChild.class);
-
+    
     @Autowired
     private UserOperator userOperator;
 
@@ -35,9 +35,6 @@ public class TpTaskChild extends TpTask {
     private String initiatorRealname;
 
     public String getInitiatorRealname() {
-        if (StringUtils.isEmpty(initiatorRealname)) {
-            initiatorRealname = userOperator.getRealnameByUsername(getInitiator());
-        }
         return initiatorRealname;
     }
 

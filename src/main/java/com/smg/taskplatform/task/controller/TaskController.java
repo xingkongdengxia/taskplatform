@@ -245,6 +245,8 @@ public class TaskController extends BaseController {
             for (TpTask tpTask : tpTaskrows) {
                 TpTaskChild tpTaskChild = new TpTaskChild();
                 FatherToChildUtil.fatherToChild(tpTask, tpTaskChild);
+                String realname = userOperator.getRealnameByUsername(tpTask.getInitiator());    //找到发起人的真实姓名
+                tpTaskChild.setInitiatorRealname(realname);
                 rows.add(tpTaskChild);
             }
         }

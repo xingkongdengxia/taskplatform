@@ -3,7 +3,9 @@ package com.smg.taskplatform.task.operator;
 import com.magicube.framework.upms.dao.model.UpmsUser;
 import com.magicube.framework.upms.dao.model.UpmsUserExample;
 import com.magicube.framework.upms.rpc.api.UpmsUserService;
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +68,63 @@ public class UserOperator {
             return null;
         }
 
+    }
+
+    /**
+     * 根据用户名序列，得到用户列表
+     *
+     * @param usernameSeq
+     * @return
+     */
+    public List<UpmsUser> getUsersByUsernameSeq(String usernameSeq) {
+        List<UpmsUser> upmsUserList;
+        String[] usernameList;
+        if (StringUtils.isNotBlank(usernameSeq)) {
+            log.info("usernameSeq:" + usernameSeq);
+            usernameList = StringUtils.splitByWholeSeparator(usernameSeq, ",");
+            if (!ObjectUtils.isEmpty(usernameList)) {
+                log.info("usernameList size :" + usernameList.length);
+                upmsUserList = new ArrayList<>();
+                UpmsUserExample upmsUserExample = new UpmsUserExample();
+                for (String username : usernameList) {
+                    upmsUserExample.clear();
+                    upmsUserExample.or().andUsernameEqualTo(username);
+                    UpmsUser upmsUser = upmsUserService.selectFirstByExample(upmsUserExample);
+                    if (!ObjectUtils.isEmpty(upmsUser)) {
+                        log.info("username:" + upmsUser.getUsername());
+                        upmsUserList.add(upmsUser);
+                    }
+                }
+                return upmsUserList;
+            } else {
+                log.error("can't split the usernameSeq!");
+                return null;
+            }
+        } else {
+            log.error("usernameSeq can't be null!");
+            return null;
+        }
+    }
+
+    /**
+     * 根据用户列表，得到用户真实姓名序列
+     *
+     * @param upmsUserList
+     * @return
+     */
+    public String getRealNameSeqByUserList(List<UpmsUser> upmsUserList) {
+        StringBuilder realNameSeq = new StringBuilder();
+        if (!ObjectUtils.isEmpty(upmsUserList)) {
+            log.info("upmsUserList size:" + upmsUserList.size());
+            for (int i = 0; i < upmsUserList.size(); i++) {
+                UpmsUser upmsUser = upmsUserList.get(i);
+                realNameSeq.append(upmsUser.getRealname());
+                if (i < upmsUserList.size() - 1) {      //除了最后一个真实姓名，前面的真实姓名都要加上逗号
+                    realNameSeq.append(",");
+                }
+            }
+        }
+        return realNameSeq.toString();
     }
 
 }
