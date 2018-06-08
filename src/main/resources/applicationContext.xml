@@ -357,7 +357,11 @@
     </bean>
     
     <!-- 任务操作服务 -->
-    <bean id="taskOperator" class="com.smg.taskplatform.task.operator.TaskOperator" />
+    <bean id="taskOperator" class="com.smg.taskplatform.task.operator.TaskOperator">
+        <property name="userOperator">
+            <ref bean="userOperator" />
+        </property>
+    </bean>
         
     
     <!--   ##################     其他Bean配置结束    ################## -->

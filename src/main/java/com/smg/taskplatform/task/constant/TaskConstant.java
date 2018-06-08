@@ -37,4 +37,68 @@ public class TaskConstant extends BaseConstants {
     public static final Byte PRIORITY_MIDDLE = 1;   //中
     public static final Byte PRIORITY_HIGH = 2;   //高
 
+    /**
+     * 得到任务来源名称
+     *
+     * @param taskSource
+     * @return
+     */
+    public static String getTaskSourceName(Byte taskSource) {
+
+        if (taskSource.compareTo(TASK_SOURCE_SELF) == 0) {     //自建任务
+            return "自建任务";
+        } else if (taskSource.compareTo(TASK_SOURCE_OA) == 0) {    //源自OA系统的任务
+            return "源自OA";
+        } else {
+            return "未知";
+        }
+
+    }
+
+    /**
+     * 得到任务类型名称
+     *
+     * @param taskType
+     * @return
+     */
+    public static String getTaskTypeName(Byte taskType) {
+
+        if (taskType.compareTo(TASK_TYPE_SYSMAINTENANCE) == 0) {     //系统运维
+            return "系统运维";
+        } else if (taskType.compareTo(TASK_TYPE_SYSUPGRADE) == 0) {    //系统升级
+            return "系统升级";
+        } else if (taskType.compareTo(TASK_TYPE_EMERGENCY) == 0) {    //应急演练
+            return "应急演练";
+        } else if (taskType.compareTo(TASK_TYPE_OTHER) == 0) {    //其他
+            return "其他";
+        } else {
+            return "未知";
+        }
+
+    }
+
+    /**
+     * 得到任务状态名称
+     *
+     * @param taskStatus
+     * @return
+     */
+    public static String getTaskStatusName(Byte taskStatus) {
+
+        if (taskStatus.compareTo(TASK_STATUS_INPROGRESS) == 0) {     //进行中
+            return "进行中";
+        } else if (taskStatus.compareTo(TASK_STATUS_COMPLETED) == 0) {    //已完成
+            return "已完成";
+        } else if (taskStatus.compareTo(TASK_STATUS_SUSPENDED) == 0) {    //已暂停
+            return "已暂停";
+        } else if (taskStatus.compareTo(TASK_STATUS_ABANDONED) == 0) {    //已作废
+            return "已作废";
+        } else if (taskStatus.compareTo(TASK_STATUS_CLOSED) == 0) {    //已关闭
+            return "已关闭";
+        } else {
+            return "未知";
+        }
+
+    }
+
 }

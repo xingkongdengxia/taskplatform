@@ -2,7 +2,6 @@ package com.smg.taskplatform.task.operator;
 
 import com.magicube.framework.common.SpringUtil;
 import com.magicube.framework.upms.dao.model.UpmsUser;
-import com.magicube.framework.upms.rpc.api.UpmsUserService;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -100,6 +99,21 @@ public class UserOperatorTest {
         String realNameSeq = instance.getRealNameSeqByUserList(userList);
         assertEquals(expResult, realNameSeq);
         System.out.println("realNameSeq:" + realNameSeq);
+    }
+
+    /**
+     * Test of getRealNameSeqByUsernameSeq method, of class UserOperator.
+     */
+    @Test
+    public void testGetRealNameSeqByUsernameSeq() {
+        System.out.println("getRealNameSeqByUsernameSeq");
+        UserOperator instance = (UserOperator) SpringUtil.getBean("userOperator");
+
+        String usernameSeq = "chenzijian,test,caihuachen,";
+        String expResult = "陈子建,蔡华臣test,蔡华臣";
+        String result = instance.getRealNameSeqByUsernameSeq(usernameSeq);
+        assertEquals(expResult, result);
+        System.out.println("result:" + result);
     }
 
 }

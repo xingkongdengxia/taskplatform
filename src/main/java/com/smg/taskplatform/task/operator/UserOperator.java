@@ -127,4 +127,15 @@ public class UserOperator {
         return realNameSeq.toString();
     }
 
+    /**
+     * 根据用户名序列，得到用户真实姓名序列
+     *
+     * @param usernameSeq
+     * @return
+     */
+    public String getRealNameSeqByUsernameSeq(String usernameSeq) {
+        List<UpmsUser> upmsUserList = getUsersByUsernameSeq(usernameSeq);
+        return getRealNameSeqByUserList(upmsUserList);
+    }
+
 }

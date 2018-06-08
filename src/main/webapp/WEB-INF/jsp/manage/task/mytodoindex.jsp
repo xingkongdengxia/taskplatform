@@ -64,11 +64,11 @@
                         {field: 'taskId', title: '编号', sortable: true, align: 'center'},
                         {field: 'title', title: '任务名称'},
                         {field: 'initiatorRealname', title: '发起人'},
-                        {field: 'responsibleman', title: '责任人'},
-                        {field: 'executor', title: '执行人'},
-                        {field: 'taskSource', title: '任务来源'},
-                        {field: 'taskType', title: '任务类型'},
-                        {field: 'taskStatus', title: '任务状态'},
+                        {field: 'responsiblemanRealname', title: '责任人'},
+                        {field: 'executorRealname', title: '执行人'},
+                        {field: 'taskSourceName', title: '任务来源'},
+                        {field: 'taskTypeName', title: '任务类型'},
+                        {field: 'taskStatusName', title: '任务状态'},
                         {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
                     ]
                 });

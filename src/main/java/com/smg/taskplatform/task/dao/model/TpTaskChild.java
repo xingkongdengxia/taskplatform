@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TpTaskChild extends TpTask {
 
     private static final Log log = LogFactory.getLog(TpTaskChild.class);
-    
+
     @Autowired
     private UserOperator userOperator;
 
@@ -30,9 +30,74 @@ public class TpTaskChild extends TpTask {
     private String showEndtime;
 
     /**
-     * 发起人姓名
+     * 发起人真实姓名
      */
     private String initiatorRealname;
+
+    /**
+     * 责任人真实姓名
+     */
+    private String responsiblemanRealname;
+
+    /**
+     * 执行人真实姓名
+     */
+    private String executorRealname;
+
+    /**
+     * 任务类型名称
+     */
+    private String taskTypeName;
+
+    /**
+     * 任务来源名称
+     */
+    private String taskSourceName;
+
+    /**
+     * 任务状态名称
+     */
+    private String taskStatusName;
+
+    public String getTaskTypeName() {
+        return taskTypeName;
+    }
+
+    public void setTaskTypeName(String taskTypeName) {
+        this.taskTypeName = taskTypeName;
+    }
+
+    public String getTaskSourceName() {
+        return taskSourceName;
+    }
+
+    public void setTaskSourceName(String taskSourceName) {
+        this.taskSourceName = taskSourceName;
+    }
+
+    public String getTaskStatusName() {
+        return taskStatusName;
+    }
+
+    public void setTaskStatusName(String taskStatusName) {
+        this.taskStatusName = taskStatusName;
+    }
+
+    public String getExecutorRealname() {
+        return executorRealname;
+    }
+
+    public void setExecutorRealname(String executorRealname) {
+        this.executorRealname = executorRealname;
+    }
+
+    public String getResponsiblemanRealname() {
+        return responsiblemanRealname;
+    }
+
+    public void setResponsiblemanRealname(String responsiblemanRealname) {
+        this.responsiblemanRealname = responsiblemanRealname;
+    }
 
     public String getInitiatorRealname() {
         return initiatorRealname;
