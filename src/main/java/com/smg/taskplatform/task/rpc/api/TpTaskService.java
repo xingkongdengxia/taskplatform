@@ -6,7 +6,7 @@ import com.smg.taskplatform.task.dao.model.TpTaskExample;
 
 /**
 * TpTaskService接口
-* Created by justincai on 2018/5/11.
+* Created by justincai on 2018/6/9.
 */
 public interface TpTaskService extends BaseService<TpTask, TpTaskExample> {
 

@@ -59,6 +59,19 @@ public class TpTaskChild extends TpTask {
      */
     private String taskStatusName;
 
+    /**
+     * 优先级名称
+     */
+    private String priorityName;
+
+    public String getPriorityName() {
+        return priorityName;
+    }
+
+    public void setPriorityName(String priorityName) {
+        this.priorityName = priorityName;
+    }
+
     public String getTaskTypeName() {
         return taskTypeName;
     }

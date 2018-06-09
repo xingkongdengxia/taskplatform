@@ -154,6 +154,8 @@ public class TpTask implements Serializable {
      */
     private String summary;
 
+    private Long ctime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getTaskId() {
@@ -308,6 +310,14 @@ public class TpTask implements Serializable {
         this.summary = summary;
     }
 
+    public Long getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(Long ctime) {
+        this.ctime = ctime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -333,6 +343,7 @@ public class TpTask implements Serializable {
         sb.append(", serverAssociation=").append(serverAssociation);
         sb.append(", reportingCycle=").append(reportingCycle);
         sb.append(", summary=").append(summary);
+        sb.append(", ctime=").append(ctime);
         sb.append("]");
         return sb.toString();
     }
@@ -367,7 +378,8 @@ public class TpTask implements Serializable {
             && (this.getSystemAssociation() == null ? other.getSystemAssociation() == null : this.getSystemAssociation().equals(other.getSystemAssociation()))
             && (this.getServerAssociation() == null ? other.getServerAssociation() == null : this.getServerAssociation().equals(other.getServerAssociation()))
             && (this.getReportingCycle() == null ? other.getReportingCycle() == null : this.getReportingCycle().equals(other.getReportingCycle()))
-            && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()));
+            && (this.getSummary() == null ? other.getSummary() == null : this.getSummary().equals(other.getSummary()))
+            && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()));
     }
 
     @Override
@@ -393,6 +405,7 @@ public class TpTask implements Serializable {
         result = prime * result + ((getServerAssociation() == null) ? 0 : getServerAssociation().hashCode());
         result = prime * result + ((getReportingCycle() == null) ? 0 : getReportingCycle().hashCode());
         result = prime * result + ((getSummary() == null) ? 0 : getSummary().hashCode());
+        result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
         return result;
     }
 }

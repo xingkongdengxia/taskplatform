@@ -139,6 +139,8 @@ public class TaskController extends BaseController {
         task.setStarttime(taskchild.getStarttime());
         task.setEndtime(taskchild.getEndtime());
         task.setTaskStatus(TaskConstant.TASK_STATUS_INPROGRESS);    //任务状态：进行中
+        long time = System.currentTimeMillis();
+        task.setCtime(time);
 
         int isSuccess = tpTaskService.insertSelective(task);
         log.info("isSuccess:" + isSuccess);
@@ -183,8 +185,6 @@ public class TaskController extends BaseController {
             @RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, defaultValue = "", value = "search") String search,
-            @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order,
             HttpServletRequest request) throws InvocationTargetException {
 
         //得到当前登录用户
@@ -200,12 +200,12 @@ public class TaskController extends BaseController {
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andResponsiblemanLike("%" + username + "%")
+                    .andResponsiblemanLike("%" + username + ",%")
                     .andTitleLike("%" + search + "%");      //任务名称
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andExecutorLike("%" + username + "%")
+                    .andExecutorLike("%" + username + ",%")
                     .andTitleLike("%" + search + "%");      //任务名称
 
             if (StringUtils.isNumeric(search)) {     //任务编号
@@ -213,29 +213,116 @@ public class TaskController extends BaseController {
                 tpTaskExample.or()
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                        .andResponsiblemanLike("%" + username + "%")
+                        .andResponsiblemanLike("%" + username + ",%")
                         .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
                 tpTaskExample.or()
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                         .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                        .andExecutorLike("%" + username + "%")
+                        .andExecutorLike("%" + username + ",%")
                         .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
             }
         } else {
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andResponsiblemanLike("%" + username + "%");
+                    .andResponsiblemanLike("%" + username + ",%");
             tpTaskExample.or()
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
                     .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
-                    .andExecutorLike("%" + username + "%");
+                    .andExecutorLike("%" + username + ",%");
         }
 
         //排序条件
-        if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
-            tpTaskExample.setOrderByClause(sort + " " + order);
+        tpTaskExample.setOrderByClause(" task_id desc ");
+
+        List<TpTask> tpTaskrows = tpTaskService.selectByExampleForOffsetPage(tpTaskExample, offset, limit);
+
+        //TpTask类转换为TpTaskChild,便于数据转换
+        List<TpTaskChild> rows = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(tpTaskrows)) {
+            for (TpTask tpTask : tpTaskrows) {
+                TpTaskChild tpTaskChild = new TpTaskChild();
+                FatherToChildUtil.fatherToChild(tpTask, tpTaskChild);
+
+                //转换TpTaskChild对象中相关字段信息
+                tpTaskChild = taskOperator.convertTpTaskChildField(tpTaskChild);
+
+                rows.add(tpTaskChild);
+            }
         }
+
+        long total = rows.size();
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("rows", rows);
+        result.put("total", total);
+        return result;
+    }
+    
+    @ApiOperation(value = "我的待办")
+    @RequiresPermissions("tp:task:mytodo")
+    @RequestMapping(value = "/mytodoindex", method = RequestMethod.GET)
+    public String mytodoindex() {
+        return "/manage/task/mytodoindex.jsp";
+    }
+
+    @ApiOperation(value = "我的待办列表")
+    @RequiresPermissions("tp:task:mytodo")
+    @RequestMapping(value = "/mytodolist", method = RequestMethod.GET)
+    @ResponseBody
+    public Object mytodolist(
+            @RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+            @RequestParam(required = false, defaultValue = "", value = "search") String search,
+            HttpServletRequest request) throws InvocationTargetException {
+
+        //得到当前登录用户
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getPrincipal();
+
+        //待办条件：任务的责任人和执行人中有操作者，任务未处于“已关闭”或“已作废”状态      
+        TpTaskExample tpTaskExample = new TpTaskExample();
+
+        //搜索条件
+        if (StringUtils.isNotBlank(search)) {
+            log.info("search:" + search);
+            tpTaskExample.or()
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                    .andResponsiblemanLike("%" + username + ",%")
+                    .andTitleLike("%" + search + "%");      //任务名称
+            tpTaskExample.or()
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                    .andExecutorLike("%" + username + ",%")
+                    .andTitleLike("%" + search + "%");      //任务名称
+
+            if (StringUtils.isNumeric(search)) {     //任务编号
+                log.info("search str is a number!");
+                tpTaskExample.or()
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                        .andResponsiblemanLike("%" + username + ",%")
+                        .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
+                tpTaskExample.or()
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                        .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                        .andExecutorLike("%" + username + ",%")
+                        .andTaskIdEqualTo(Integer.valueOf(search));   //任务编号 
+            }
+        } else {
+            tpTaskExample.or()
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                    .andResponsiblemanLike("%" + username + ",%");
+            tpTaskExample.or()
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_CLOSED)
+                    .andTaskStatusNotEqualTo(TaskConstant.TASK_STATUS_ABANDONED)
+                    .andExecutorLike("%" + username + ",%");
+        }
+
+        //排序条件
+        tpTaskExample.setOrderByClause(" task_id desc ");
 
         List<TpTask> tpTaskrows = tpTaskService.selectByExampleForOffsetPage(tpTaskExample, offset, limit);
 

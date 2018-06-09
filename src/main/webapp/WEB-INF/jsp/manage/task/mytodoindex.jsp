@@ -61,14 +61,15 @@
                     },
                     columns: [
                         {field: 'ck', checkbox: true},
-                        {field: 'taskId', title: '编号', sortable: true, align: 'center'},
+                        {field: 'taskId', title: '编号', align: 'center'},
                         {field: 'title', title: '任务名称'},
-                        {field: 'initiatorRealname', title: '发起人'},
-                        {field: 'responsiblemanRealname', title: '责任人'},
-                        {field: 'executorRealname', title: '执行人'},
-                        {field: 'taskSourceName', title: '任务来源'},
-                        {field: 'taskTypeName', title: '任务类型'},
-                        {field: 'taskStatusName', title: '任务状态'},
+                        {field: 'initiatorRealname', title: '发起人', align: 'center'},
+                        {field: 'responsiblemanRealname', title: '责任人', align: 'center'},
+                        {field: 'executorRealname', title: '执行人', align: 'center'},
+                        {field: 'taskSourceName', title: '任务来源', align: 'center'},
+                        {field: 'taskTypeName', title: '任务类型', align: 'center'},
+                        {field: 'taskStatusName', title: '任务状态', align: 'center'},
+                        {field: 'priorityName', title: '优先级', align: 'center'},
                         {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
                     ]
                 });

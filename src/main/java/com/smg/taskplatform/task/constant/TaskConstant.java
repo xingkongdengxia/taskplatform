@@ -101,4 +101,24 @@ public class TaskConstant extends BaseConstants {
 
     }
 
+    /**
+     * 得到优先级名称
+     *
+     * @param priority
+     * @return
+     */
+    public static String getPriorityName(Byte priority) {
+
+        if (priority.compareTo(PRIORITY_LOW) == 0) {     //低
+            return "低";
+        } else if (priority.compareTo(PRIORITY_MIDDLE) == 0) {    //中
+            return "中";
+        } else if (priority.compareTo(PRIORITY_HIGH) == 0) {    //高
+            return "高";
+        } else {
+            return "未知";
+        }
+
+    }
+
 }

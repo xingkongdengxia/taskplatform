@@ -7,7 +7,7 @@ import com.smg.taskplatform.task.dao.model.TpTaskExample;
 
 /**
 * 降级实现TpTaskService接口
-* Created by justincai on 2018/5/11.
+* Created by justincai on 2018/6/9.
 */
 public class TpTaskServiceMock extends BaseServiceMock<TpTaskMapper, TpTask, TpTaskExample> implements TpTaskService {
 

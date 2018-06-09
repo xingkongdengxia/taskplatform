@@ -138,4 +138,22 @@ public class UserOperator {
         return getRealNameSeqByUserList(upmsUserList);
     }
 
+    /**
+     * 得到所有用户名字符串
+     *
+     * @return
+     */
+    public String getAllUsersStr() {
+        StringBuilder allUserStr = new StringBuilder();
+        List<UpmsUser> allUserList = getAllUsersExceptAdmin();
+        if (!ObjectUtils.isEmpty(allUserList)) {
+            log.info("allUserList size:" + allUserList.size());
+            for (UpmsUser upmsUser : allUserList) {
+                allUserStr.append(upmsUser.getUsername());
+                allUserStr.append(",");
+            }
+        }
+        return allUserStr.toString();
+    }
+
 }

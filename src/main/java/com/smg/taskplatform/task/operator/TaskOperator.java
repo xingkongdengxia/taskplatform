@@ -132,6 +132,11 @@ public class TaskOperator {
         tpTaskChild.setTaskStatusName(taskStatusName);
         log.debug("convert taskStatus's name:" + tpTaskChild.getTaskStatus() + "-->" + taskStatusName);
 
+        //转换优先级名称
+        String priorityName = TaskConstant.getPriorityName(tpTaskChild.getPriority());
+        tpTaskChild.setPriorityName(priorityName);
+        log.debug("convert priority's name:" + tpTaskChild.getPriority() + "-->" + priorityName);
+
         return tpTaskChild;
 
     }

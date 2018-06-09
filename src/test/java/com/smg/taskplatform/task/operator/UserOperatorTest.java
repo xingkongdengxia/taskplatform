@@ -116,4 +116,16 @@ public class UserOperatorTest {
         System.out.println("result:" + result);
     }
 
+    /**
+     * Test of getAllUsersStr method, of class UserOperator.
+     */
+    @Test
+    public void testGetAllUsersStr() {
+        System.out.println("getAllUsersStr");
+        UserOperator instance = (UserOperator) SpringUtil.getBean("userOperator");
+
+        String result = instance.getAllUsersStr();
+        System.out.println(result);
+    }
+
 }
