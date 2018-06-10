@@ -78,9 +78,29 @@
             // 格式化操作按钮
             function actionFormatter(value, row, index) {
                 return [
-                    '<a class="update" href="javascript:;" onclick="updateAction()" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
-                    '<a class="delete" href="javascript:;" onclick="deleteAction()" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
+                    '<a class="update" href="javascript:;" onclick="viewAction()" data-toggle="tooltip" title="查看"><i class="glyphicon glyphicon-eye-open"></i></a>　'
                 ].join('');
+            }
+
+            // 查看单条记录            
+            function viewAction() {
+                var rows = $table.bootstrapTable('getSelections');
+                if (rows.length != 1) {
+                    $.confirm({
+                        title: false,
+                        content: '请选择一条记录！',
+                        autoClose: 'cancel|3000',
+                        backgroundDismiss: true,
+                        buttons: {
+                            cancel: {
+                                text: '取消',
+                                btnClass: 'waves-effect waves-button'
+                            }
+                        }
+                    });
+                } else {
+                    window.open('${basePath}/manage/task/viewtask?taskId=' + rows[0].taskId);
+                }
             }
 
 
