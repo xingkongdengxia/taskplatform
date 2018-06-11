@@ -20,10 +20,10 @@
         <div id="main">
             <c:import url="/resources/inc/search.jsp" />
             <div id="toolbar">
-
+                <shiro:hasPermission name="tp:task:mytodo"><a class="waves-effect waves-button" href="javascript:;" onclick="viewAction()"><i class="glyphicon glyphicon-eye-open"></i> 查看任务详情</a></shiro:hasPermission>
+                </div>
+                <table id="table"></table>
             </div>
-            <table id="table"></table>
-        </div>
         <c:import url="/resources/inc/footer.jsp" />
         <script>
             var $table = $('#table');
@@ -99,7 +99,8 @@
                         }
                     });
                 } else {
-                    window.open('${basePath}/manage/task/viewtask?taskId=' + rows[0].taskId);
+                    window.open('${basePath}/manage/task/taskinfo?taskId=' + rows[0].taskId);
+                    //window.open('${basePath}/manage/task/taskinfo');
                 }
             }
 

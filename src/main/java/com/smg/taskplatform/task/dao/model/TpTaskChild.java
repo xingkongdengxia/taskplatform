@@ -45,6 +45,11 @@ public class TpTaskChild extends TpTask {
     private String executorRealname;
 
     /**
+     * 抄送人真实姓名
+     */
+    private String ccRealname;
+
+    /**
      * 任务类型名称
      */
     private String taskTypeName;
@@ -63,6 +68,14 @@ public class TpTaskChild extends TpTask {
      * 优先级名称
      */
     private String priorityName;
+
+    public String getCcRealname() {
+        return ccRealname;
+    }
+
+    public void setCcRealname(String ccRealname) {
+        this.ccRealname = ccRealname;
+    }
 
     public String getPriorityName() {
         return priorityName;
@@ -126,10 +139,6 @@ public class TpTaskChild extends TpTask {
 
     public void setShowStarttime(String showStarttime) {
         this.showStarttime = showStarttime;
-        if (!StringUtils.isEmpty(showStarttime)) {
-            Date date = DateFormatUtil.getDateByStringDate(showStarttime);
-            setStarttime(date.getTime());
-        }
     }
 
     public String getShowEndtime() {
@@ -138,10 +147,6 @@ public class TpTaskChild extends TpTask {
 
     public void setShowEndtime(String showEndtime) {
         this.showEndtime = showEndtime;
-        if (!StringUtils.isEmpty(showEndtime)) {
-            Date date = DateFormatUtil.getDateByStringDate(showEndtime);
-            setEndtime(date.getTime());
-        }
     }
 
     @Override

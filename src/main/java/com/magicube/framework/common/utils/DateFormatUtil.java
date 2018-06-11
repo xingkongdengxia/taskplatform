@@ -38,6 +38,18 @@ public class DateFormatUtil {
     }
 
     /**
+     * 把毫秒数转为格式化日期
+     *
+     * @param time
+     * @param dateFormat
+     * @return
+     */
+    public static String formatTime(long time, String dateFormat) {
+        SimpleDateFormat sdFormat = new SimpleDateFormat(dateFormat);
+        return sdFormat.format(new Date(time));
+    }
+
+    /**
      * 把毫秒数转为耗时
      *
      * @param duration

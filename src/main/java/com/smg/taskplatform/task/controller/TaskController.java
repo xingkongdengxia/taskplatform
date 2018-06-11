@@ -6,6 +6,7 @@ import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.magicube.framework.common.base.BaseController;
 import com.magicube.framework.common.constant.UpmsResult;
 import com.magicube.framework.common.constant.UpmsResultConstant;
+import com.magicube.framework.common.utils.DateFormatUtil;
 import com.magicube.framework.common.utils.FatherToChildUtil;
 import com.magicube.framework.common.validator.LengthValidator;
 import com.magicube.framework.common.validator.NotBlankValidator;
@@ -21,6 +22,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,8 +138,17 @@ public class TaskController extends BaseController {
         task.setTaskType(taskchild.getTaskType());
         task.setTaskSource(TaskConstant.TASK_SOURCE_SELF);  //自建任务
         task.setPriority(taskchild.getPriority());
-        task.setStarttime(taskchild.getStarttime());
-        task.setEndtime(taskchild.getEndtime());
+
+        if (!StringUtils.isEmpty(taskchild.getShowStarttime())) {
+            Date date = DateFormatUtil.getDateByStringDate(taskchild.getShowStarttime());
+            task.setStarttime(date.getTime());
+        }
+
+        if (!StringUtils.isEmpty(taskchild.getShowEndtime())) {
+            Date date = DateFormatUtil.getDateByStringDate(taskchild.getShowEndtime());
+            task.setEndtime(date.getTime());
+        }
+
         task.setTaskStatus(TaskConstant.TASK_STATUS_INPROGRESS);    //任务状态：进行中
         long time = System.currentTimeMillis();
         task.setCtime(time);
@@ -575,6 +586,31 @@ public class TaskController extends BaseController {
         result.put("rows", rows);
         result.put("total", total);
         return result;
+    }
+
+    @ApiOperation(value = "任务详细信息")
+    @RequiresPermissions("tp:task:mytodo")
+    @RequestMapping(value = "/taskinfo", method = RequestMethod.GET)
+    public String taskinfo(
+            @RequestParam(required = true, defaultValue = "0", value = "taskId") int taskId,
+            ModelMap modelMap) throws InvocationTargetException {
+        log.info("taskId:" + taskId);
+
+        TpTaskExample tpTaskExample = new TpTaskExample();
+        tpTaskExample.or()
+                .andTaskIdEqualTo(taskId);
+        TpTask tpTask = tpTaskService.selectFirstByExample(tpTaskExample);
+        TpTaskChild tpTaskChild = new TpTaskChild();
+        if (!ObjectUtils.isEmpty(tpTask)) {
+            FatherToChildUtil.fatherToChild(tpTask, tpTaskChild);
+
+            //转换TpTaskChild对象中相关字段信息
+            tpTaskChild = taskOperator.convertTpTaskChildField(tpTaskChild);
+        }
+
+        modelMap.put("tpTaskChild", tpTaskChild);
+
+        return "/manage/task/taskinfo.jsp";
     }
 
 }

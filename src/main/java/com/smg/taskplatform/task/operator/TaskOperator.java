@@ -11,6 +11,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -117,6 +118,11 @@ public class TaskOperator {
         tpTaskChild.setExecutorRealname(executorRealname);
         log.debug("convert executor's realname:" + tpTaskChild.getExecutor() + "-->" + executorRealname);
 
+        //转换抄送人真实姓名
+        String ccRealname = userOperator.getRealNameSeqByUsernameSeq(tpTaskChild.getCc());
+        tpTaskChild.setCcRealname(ccRealname);
+        log.debug("convert cc's realname:" + tpTaskChild.getCc() + "-->" + ccRealname);
+
         //转换任务来源名称
         String taskSourceName = TaskConstant.getTaskSourceName(tpTaskChild.getTaskSource());
         tpTaskChild.setTaskSourceName(taskSourceName);
@@ -136,6 +142,21 @@ public class TaskOperator {
         String priorityName = TaskConstant.getPriorityName(tpTaskChild.getPriority());
         tpTaskChild.setPriorityName(priorityName);
         log.debug("convert priority's name:" + tpTaskChild.getPriority() + "-->" + priorityName);
+
+        //转换开始日期
+        String dateFormat = "yyyy-MM-dd";
+        if (!ObjectUtils.isEmpty(tpTaskChild.getStarttime())) {
+            String showStarttime = DateFormatUtil.formatTime(tpTaskChild.getStarttime(), dateFormat);
+            tpTaskChild.setShowStarttime(showStarttime);
+            log.debug("convert starttime:" + tpTaskChild.getStarttime() + "-->" + showStarttime);
+        }
+
+        //转换截止日期        
+        if (!ObjectUtils.isEmpty(tpTaskChild.getEndtime())) {
+            String showEndtime = DateFormatUtil.formatTime(tpTaskChild.getEndtime(), dateFormat);
+            tpTaskChild.setShowEndtime(showEndtime);
+            log.debug("convert showEndtime:" + tpTaskChild.getEndtime() + "-->" + showEndtime);
+        }
 
         return tpTaskChild;
 
