@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>smg taskplatform</display-name>
+    <display-name>taskplatform</display-name>
     
     <!-- 强制进行转码 -->
     <filter>

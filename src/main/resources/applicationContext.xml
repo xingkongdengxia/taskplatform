@@ -117,7 +117,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--        <property name="mapperLocations" value="classpath*:com/smg/framework/upms/dao/mapper/*Mapper.xml"/>-->
+        <!--        <property name="mapperLocations" value="classpath*:com/ggg/framework/upms/dao/mapper/*Mapper.xml"/>-->
         <property name="mapperLocations">
             <array>
                 <value>classpath:mapper/*.xml</value>
@@ -370,17 +370,17 @@
     <bean id="paramConfigService" class="com.magicube.framework.config.rpc.service.impl.ParamConfigServiceImpl"/>
     
     <!-- 任务服务 -->
-    <bean id="tpTaskService" class="com.smg.taskplatform.task.rpc.service.impl.TpTaskServiceImpl"/>
+    <bean id="tpTaskService" class="com.ggg.taskplatform.task.rpc.service.impl.TpTaskServiceImpl"/>
     
     <!-- 用户操作服务 -->
-    <bean id="userOperator" class="com.smg.taskplatform.task.operator.UserOperator">
+    <bean id="userOperator" class="com.ggg.taskplatform.task.operator.UserOperator">
         <property name="upmsUserService">
             <ref bean="upmsUserService" />
         </property>
     </bean>
     
     <!-- 任务操作服务 -->
-    <bean id="taskOperator" class="com.smg.taskplatform.task.operator.TaskOperator">
+    <bean id="taskOperator" class="com.ggg.taskplatform.task.operator.TaskOperator">
         <property name="userOperator">
             <ref bean="userOperator" />
         </property>

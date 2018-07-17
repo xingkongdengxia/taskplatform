@@ -72,13 +72,13 @@ public class DBUtil {
      *
      * @param fromDS 源数据库
      * @param toDS 目的数据库
-     * @param query 源数据库表的查询语句，例：select deptid, setid, descr, smg_oa_deptid from
-     * sysadm.PS_SMG_DEPT_SY_VW
-     * @param fields model类字段名，例如："deptid", "setid", "descr", "smgOaDeptid"
+     * @param query 源数据库表的查询语句，例：select deptid, setid, descr, ggg_oa_deptid from
+     * sysadm.PS_GGG_DEPT_SY_VW
+     * @param fields model类字段名，例如："deptid", "setid", "descr", "gggOaDeptid"
      * @param insertSQL 插入目的数据库表的INSERT语句，例如：INSERT INTO
-     * HR_SMG_DEPT_SY_VW(deptid, setid, descr, smg_oa_deptid) VALUES (?,?,?);
+     * HR_GGG_DEPT_SY_VW(deptid, setid, descr, ggg_oa_deptid) VALUES (?,?,?);
      * @param recordClass model类class 注意： 1、query中的字段顺序必须与fields中的字段顺序保持一致
-     * 2、fields中的字段名字与recordClass中的字段名字保持一致（有时候model类中的字段名与数据库表的字段名不一致，比如：fields中的smgOaDeptid和insertSQL中的smg_oa_deptid）
+     * 2、fields中的字段名字与recordClass中的字段名字保持一致（有时候model类中的字段名与数据库表的字段名不一致，比如：fields中的gggOaDeptid和insertSQL中的ggg_oa_deptid）
      * @return
      *
      */

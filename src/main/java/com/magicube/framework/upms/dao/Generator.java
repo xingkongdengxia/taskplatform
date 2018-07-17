@@ -16,7 +16,7 @@ public class Generator {
     private static final String MODULE = "task";
     private static final String DATABASE = "taskplatform";
     private static final String TABLE_PREFIX = "tp_task_oper_";
-    private static final String PACKAGE_NAME = "com.smg.taskplatform.task";
+    private static final String PACKAGE_NAME = "com.ggg.taskplatform.task";
     private static final String JDBC_DRIVER = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.driver");
     private static final String JDBC_URL = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.url");
     private static final String JDBC_USERNAME = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.username");
