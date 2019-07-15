@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggg.taskplatform.task.dao.mapper.TpTaskMapper">
+  <resultMap id="BaseResultMap" type="com.ggg.taskplatform.task.dao.model.TpTask">
+    <id column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="initiator" jdbcType="VARCHAR" property="initiator" />
+    <result column="responsibleman" jdbcType="VARCHAR" property="responsibleman" />
+    <result column="executor" jdbcType="VARCHAR" property="executor" />
+    <result column="cc" jdbcType="VARCHAR" property="cc" />
+    <result column="operatorlist" jdbcType="VARCHAR" property="operatorlist" />
+    <result column="task_type" jdbcType="TINYINT" property="taskType" />
+    <result column="task_source" jdbcType="TINYINT" property="taskSource" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="starttime" jdbcType="BIGINT" property="starttime" />
+    <result column="task_status" jdbcType="TINYINT" property="taskStatus" />
+    <result column="endtime" jdbcType="BIGINT" property="endtime" />
+    <result column="task_association" jdbcType="VARCHAR" property="taskAssociation" />
+    <result column="system_association" jdbcType="VARCHAR" property="systemAssociation" />
+    <result column="server_association" jdbcType="VARCHAR" property="serverAssociation" />
+    <result column="reporting_cycle" jdbcType="TINYINT" property="reportingCycle" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="ctime" jdbcType="BIGINT" property="ctime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_id, title, description, initiator, responsibleman, executor, cc, operatorlist, 
+    task_type, task_source, priority, starttime, task_status, endtime, task_association, 
+    system_association, server_association, reporting_cycle, summary, ctime
+  </sql>
+  <select id="selectByExample" parameterType="com.ggg.taskplatform.task.dao.model.TpTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_task
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tp_task
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ggg.taskplatform.task.dao.model.TpTaskExample">
+    delete from tp_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ggg.taskplatform.task.dao.model.TpTask">
+    insert into tp_task (task_id, title, description, 
+      initiator, responsibleman, executor, 
+      cc, operatorlist, task_type, 
+      task_source, priority, starttime, 
+      task_status, endtime, task_association, 
+      system_association, server_association, reporting_cycle, 
+      summary, ctime)
+    values (#{taskId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{initiator,jdbcType=VARCHAR}, #{responsibleman,jdbcType=VARCHAR}, #{executor,jdbcType=VARCHAR}, 
+      #{cc,jdbcType=VARCHAR}, #{operatorlist,jdbcType=VARCHAR}, #{taskType,jdbcType=TINYINT}, 
+      #{taskSource,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, #{starttime,jdbcType=BIGINT}, 
+      #{taskStatus,jdbcType=TINYINT}, #{endtime,jdbcType=BIGINT}, #{taskAssociation,jdbcType=VARCHAR}, 
+      #{systemAssociation,jdbcType=VARCHAR}, #{serverAssociation,jdbcType=VARCHAR}, #{reportingCycle,jdbcType=TINYINT}, 
+      #{summary,jdbcType=VARCHAR}, #{ctime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ggg.taskplatform.task.dao.model.TpTask">
+    insert into tp_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="initiator != null">
+        initiator,
+      </if>
+      <if test="responsibleman != null">
+        responsibleman,
+      </if>
+      <if test="executor != null">
+        executor,
+      </if>
+      <if test="cc != null">
+        cc,
+      </if>
+      <if test="operatorlist != null">
+        operatorlist,
+      </if>
+      <if test="taskType != null">
+        task_type,
+      </if>
+      <if test="taskSource != null">
+        task_source,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="starttime != null">
+        starttime,
+      </if>
+      <if test="taskStatus != null">
+        task_status,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
+      <if test="taskAssociation != null">
+        task_association,
+      </if>
+      <if test="systemAssociation != null">
+        system_association,
+      </if>
+      <if test="serverAssociation != null">
+        server_association,
+      </if>
+      <if test="reportingCycle != null">
+        reporting_cycle,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleman != null">
+        #{responsibleman,jdbcType=VARCHAR},
+      </if>
+      <if test="executor != null">
+        #{executor,jdbcType=VARCHAR},
+      </if>
+      <if test="cc != null">
+        #{cc,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorlist != null">
+        #{operatorlist,jdbcType=VARCHAR},
+      </if>
+      <if test="taskType != null">
+        #{taskType,jdbcType=TINYINT},
+      </if>
+      <if test="taskSource != null">
+        #{taskSource,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=TINYINT},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="taskAssociation != null">
+        #{taskAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="systemAssociation != null">
+        #{systemAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAssociation != null">
+        #{serverAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="reportingCycle != null">
+        #{reportingCycle,jdbcType=TINYINT},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ggg.taskplatform.task.dao.model.TpTaskExample" resultType="java.lang.Long">
+    select count(*) from tp_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tp_task
+    <set>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initiator != null">
+        initiator = #{record.initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsibleman != null">
+        responsibleman = #{record.responsibleman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executor != null">
+        executor = #{record.executor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cc != null">
+        cc = #{record.cc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorlist != null">
+        operatorlist = #{record.operatorlist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskType != null">
+        task_type = #{record.taskType,jdbcType=TINYINT},
+      </if>
+      <if test="record.taskSource != null">
+        task_source = #{record.taskSource,jdbcType=TINYINT},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=TINYINT},
+      </if>
+      <if test="record.starttime != null">
+        starttime = #{record.starttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskStatus != null">
+        task_status = #{record.taskStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.endtime != null">
+        endtime = #{record.endtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskAssociation != null">
+        task_association = #{record.taskAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemAssociation != null">
+        system_association = #{record.systemAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverAssociation != null">
+        server_association = #{record.serverAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportingCycle != null">
+        reporting_cycle = #{record.reportingCycle,jdbcType=TINYINT},
+      </if>
+      <if test="record.summary != null">
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tp_task
+    set task_id = #{record.taskId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      initiator = #{record.initiator,jdbcType=VARCHAR},
+      responsibleman = #{record.responsibleman,jdbcType=VARCHAR},
+      executor = #{record.executor,jdbcType=VARCHAR},
+      cc = #{record.cc,jdbcType=VARCHAR},
+      operatorlist = #{record.operatorlist,jdbcType=VARCHAR},
+      task_type = #{record.taskType,jdbcType=TINYINT},
+      task_source = #{record.taskSource,jdbcType=TINYINT},
+      priority = #{record.priority,jdbcType=TINYINT},
+      starttime = #{record.starttime,jdbcType=BIGINT},
+      task_status = #{record.taskStatus,jdbcType=TINYINT},
+      endtime = #{record.endtime,jdbcType=BIGINT},
+      task_association = #{record.taskAssociation,jdbcType=VARCHAR},
+      system_association = #{record.systemAssociation,jdbcType=VARCHAR},
+      server_association = #{record.serverAssociation,jdbcType=VARCHAR},
+      reporting_cycle = #{record.reportingCycle,jdbcType=TINYINT},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ggg.taskplatform.task.dao.model.TpTask">
+    update tp_task
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        initiator = #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleman != null">
+        responsibleman = #{responsibleman,jdbcType=VARCHAR},
+      </if>
+      <if test="executor != null">
+        executor = #{executor,jdbcType=VARCHAR},
+      </if>
+      <if test="cc != null">
+        cc = #{cc,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorlist != null">
+        operatorlist = #{operatorlist,jdbcType=VARCHAR},
+      </if>
+      <if test="taskType != null">
+        task_type = #{taskType,jdbcType=TINYINT},
+      </if>
+      <if test="taskSource != null">
+        task_source = #{taskSource,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="starttime != null">
+        starttime = #{starttime,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=TINYINT},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=BIGINT},
+      </if>
+      <if test="taskAssociation != null">
+        task_association = #{taskAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="systemAssociation != null">
+        system_association = #{systemAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAssociation != null">
+        server_association = #{serverAssociation,jdbcType=VARCHAR},
+      </if>
+      <if test="reportingCycle != null">
+        reporting_cycle = #{reportingCycle,jdbcType=TINYINT},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ggg.taskplatform.task.dao.model.TpTask">
+    update tp_task
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      initiator = #{initiator,jdbcType=VARCHAR},
+      responsibleman = #{responsibleman,jdbcType=VARCHAR},
+      executor = #{executor,jdbcType=VARCHAR},
+      cc = #{cc,jdbcType=VARCHAR},
+      operatorlist = #{operatorlist,jdbcType=VARCHAR},
+      task_type = #{taskType,jdbcType=TINYINT},
+      task_source = #{taskSource,jdbcType=TINYINT},
+      priority = #{priority,jdbcType=TINYINT},
+      starttime = #{starttime,jdbcType=BIGINT},
+      task_status = #{taskStatus,jdbcType=TINYINT},
+      endtime = #{endtime,jdbcType=BIGINT},
+      task_association = #{taskAssociation,jdbcType=VARCHAR},
+      system_association = #{systemAssociation,jdbcType=VARCHAR},
+      server_association = #{serverAssociation,jdbcType=VARCHAR},
+      reporting_cycle = #{reportingCycle,jdbcType=TINYINT},
+      summary = #{summary,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=BIGINT}
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

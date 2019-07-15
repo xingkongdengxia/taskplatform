@@ -1,0 +1,29 @@
+package ${package_name}.rpc.service.impl;
+
+import com.magicube.framework.common.annotation.BaseService;
+import com.magicube.framework.common.base.BaseServiceImpl;
+import ${package_name}.dao.mapper.${model}Mapper;
+import ${package_name}.dao.model.${model};
+import ${package_name}.dao.model.${model}Example;
+import ${package_name}.rpc.api.${model}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+* ${model}Service实现
+* Created by justincai on ${ctime}.
+*/
+@Service
+@Transactional
+@BaseService
+public class ${model}ServiceImpl extends BaseServiceImpl<${model}Mapper, ${model}, ${model}Example> implements ${model}Service {
+
+    private static final Log log = LogFactory.getLog(${model}ServiceImpl.class);
+
+    @Autowired
+    ${model}Mapper ${mapper}Mapper;
+
+}
